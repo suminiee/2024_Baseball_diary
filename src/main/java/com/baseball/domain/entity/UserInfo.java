@@ -3,6 +3,7 @@ package com.baseball.domain.entity;
 import com.baseball.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -37,4 +38,12 @@ public class UserInfo extends BaseTimeEntity {
 
     @Column(name = "my_team")
     private String myTeam;
+
+    public void updatePassword(PasswordEncoder passwordEncoder, String password){
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
+        return passwordEncoder.matches(checkPassword, getPassword());
+    }
 }
