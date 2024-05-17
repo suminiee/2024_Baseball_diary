@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PasswordUpdateRequestDto {
+    private String loginId;
     private String currentPassword;
     private String newPassword;
 }

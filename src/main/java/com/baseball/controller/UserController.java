@@ -3,6 +3,7 @@ package com.baseball.controller;
 import com.baseball.dto.PasswordUpdateRequestDto;
 import com.baseball.dto.UserInfoUpdateRequestDto;
 import com.baseball.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,11 @@ public class UserController {
     private final UserService userService;
 
     //회원정보 변경 - 비밀번호 변경
-    @PatchMapping("/changeMyInfo")
-    public ResponseEntity<?> updatePassword(@RequestBody PasswordUpdateRequestDto passwordUpdateRequestDto) {
+    @PatchMapping("/changeMyInfo/password")
+    public ResponseEntity<?> updatePassword(HttpSession session ,@RequestBody PasswordUpdateRequestDto passwordUpdateRequestDto) {
         try {
+            String loginId = (String)session.getAttribute("loginId");
+            passwordUpdateRequestDto.setLoginId(loginId);
             userService.updatePassword(passwordUpdateRequestDto);
             return ResponseEntity.status(HttpStatus.OK).body("비밀번호 변경 성공");
         } catch (Exception e) {
