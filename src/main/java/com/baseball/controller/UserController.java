@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -34,9 +31,11 @@ public class UserController {
     }
 
     //회원정보 변경 - 닉네임, 이메일 변경
-    @PatchMapping
-    public ResponseEntity<?> updateUserInfo(@RequestBody UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+    @PatchMapping("/changeMyInfo")
+    public ResponseEntity<?> updateUserInfo(HttpSession session ,@RequestBody UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
         try {
+            String loginId = (String)session.getAttribute("loginId");
+            userInfoUpdateRequestDto.setLoginId(loginId);
             userService.updateUserInfo(userInfoUpdateRequestDto);
             return ResponseEntity.status(HttpStatus.OK).body("회원정보 변경 성공");
         } catch (Exception e) {
@@ -48,6 +47,17 @@ public class UserController {
     //회원정보 변경 - 프로필사진 추가/변경
 
     //응원팀 변경/설정
+    @PutMapping("/changeMyTeam")
+    public ResponseEntity<?> changeMyTeam(HttpSession session, @RequestParam String myTeam) {
+        try {
+            String loginId = (String)session.getAttribute("loginId");
+            userService.updateMyTeam(loginId, myTeam);
+            return ResponseEntity.status(HttpStatus.OK).body("나의 응원팀 변경 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("나의 응원팀 변경중 오류 발생 " + e.getMessage());
+        }
+    }
 
 
 }

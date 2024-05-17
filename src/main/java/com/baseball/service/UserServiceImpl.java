@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Slf4j
@@ -59,6 +60,38 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUserInfo(UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+        try {
+            Optional<UserInfo> optionalUserInfo = userRepository.findByLoginId(userInfoUpdateRequestDto.getLoginId());
+            if (optionalUserInfo.isPresent()) {
+                UserInfo userInfo = optionalUserInfo.get();
+                userInfo.setEmail(userInfoUpdateRequestDto.getEmail());
+                userInfo.setNickname(userInfoUpdateRequestDto.getNickname());
 
+                //db에 수정내용 저장
+                userRepository.save(userInfo);
+            } else {
+                throw new IllegalArgumentException("loginId가" + userInfoUpdateRequestDto.getLoginId() +"인 계정이 존재하지 않습니다.");
+            }
+        } catch (Exception e) {
+            log.error("유저 정보변경중 오류 발생 {}", e.getMessage());
+            throw new RuntimeException("유저 정보변경중 오류 발생 " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateMyTeam(String myTeam, String loginId) {
+        try {
+            Optional<UserInfo> optionalUserInfo = userRepository.findByLoginId(loginId);
+            if (optionalUserInfo.isPresent()) {
+                UserInfo userInfo = optionalUserInfo.get();
+                userInfo.setMyTeam(myTeam);
+                log.info("************************" + myTeam);
+                //db에 수정내용 저장
+                userRepository.save(userInfo);
+            }
+        } catch (Exception e) {
+            log.error("응원 팀 변경중 오류 발생 {}", e.getMessage());
+            throw new RuntimeException("응원 팀 변경중 오류 발생 " + e.getMessage());
+        }
     }
 }

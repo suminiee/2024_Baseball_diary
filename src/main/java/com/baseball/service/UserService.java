@@ -9,4 +9,6 @@ public interface UserService {
 
     void updateUserInfo(UserInfoUpdateRequestDto userInfoUpdateRequestDto);
 
+    void updateMyTeam(String myTeam, String loginId);
+
 }
