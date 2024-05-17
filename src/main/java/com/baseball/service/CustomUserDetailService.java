@@ -57,6 +57,7 @@ public class CustomUserDetailService implements UserDetailsService {
         Authentication authentication = authenticateUser(requestDto.getLoginId(), requestDto.getPassword());
         setAuthenticationInContext(authentication);
         createSessionAndSetCookie(request, response);//세션생성 & 쿠키설정하여 사용자 세션 유지
+        HttpSession session = request.getSession();
     }
 
     //사용자 인증
