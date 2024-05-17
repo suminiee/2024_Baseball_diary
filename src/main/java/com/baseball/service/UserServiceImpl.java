@@ -79,15 +79,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateMyTeam(String myTeam, String loginId) {
+    public void updateMyTeam(String loginId, String myTeam) {
         try {
             Optional<UserInfo> optionalUserInfo = userRepository.findByLoginId(loginId);
             if (optionalUserInfo.isPresent()) {
                 UserInfo userInfo = optionalUserInfo.get();
                 userInfo.setMyTeam(myTeam);
-                log.info("************************" + myTeam);
+
                 //db에 수정내용 저장
                 userRepository.save(userInfo);
+            } else {
+                throw new IllegalArgumentException("loginId가" + loginId + "인 계정이 존재하지 않습니다.");
+
             }
         } catch (Exception e) {
             log.error("응원 팀 변경중 오류 발생 {}", e.getMessage());
