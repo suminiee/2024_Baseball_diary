@@ -8,6 +8,7 @@ import com.baseball.repository.SignUpRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -18,12 +19,17 @@ public class SignUpServiceImpl implements SignUpService {
     @Autowired
     SignUpRepository signUpRepository;
 
+    private final PasswordEncoder passwordEncoder;
+    public SignUpServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
     public void save(SignUpRequestDto signUpRequestDto) {
         try{
             UserInfo userInfo = UserInfo.builder()
                     .loginId(signUpRequestDto.getLoginId())
-                    .password(signUpRequestDto.getPassword())
+                    .password(passwordEncoder.encode(signUpRequestDto.getPassword()))//암호화하여 db에 집어넣기
                     .email(signUpRequestDto.getEmail())
                     .nickname(signUpRequestDto.getNickname())
                     .name(signUpRequestDto.getName())
