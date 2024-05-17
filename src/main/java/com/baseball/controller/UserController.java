@@ -51,6 +51,7 @@ public class UserController {
     public ResponseEntity<?> changeMyTeam(HttpSession session, @RequestParam String myTeam) {
         try {
             String loginId = (String)session.getAttribute("loginId");
+            System.out.println(myTeam);
             userService.updateMyTeam(loginId, myTeam);
             return ResponseEntity.status(HttpStatus.OK).body("나의 응원팀 변경 성공");
         } catch (Exception e) {
