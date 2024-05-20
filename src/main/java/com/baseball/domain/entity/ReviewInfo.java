@@ -22,7 +22,7 @@ public class ReviewInfo {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userInfo", nullable = false)
-    private UserInfo userId;
+    private UserInfo loginId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "teamInfo", nullable = false)

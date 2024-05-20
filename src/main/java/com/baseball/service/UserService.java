@@ -11,4 +11,6 @@ public interface UserService {
 
     void updateMyTeam(String myTeam, String loginId);
 
+    Long findUserId(String loginId);
+
 }

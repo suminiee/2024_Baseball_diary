@@ -19,12 +19,12 @@ public class ScoreInfo {
     private Long scoreId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "diaryInfo", nullable = false)
+    @JoinColumn(name = "diaryInfo", nullable = true)
     private UserInfo diaryId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userInfo", nullable = false)
-    private UserInfo userId;
+    private UserInfo loginId;
 
     @Column(nullable = false)
     private String type;

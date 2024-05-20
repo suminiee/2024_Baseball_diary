@@ -97,4 +97,20 @@ public class UserServiceImpl implements UserService{
             throw new RuntimeException("응원 팀 변경중 오류 발생 " + e.getMessage());
         }
     }
+
+    @Override
+    public Long findUserId(String loginId) {
+        try {
+            Optional<UserInfo> optionalUserInfo = userRepository.findByLoginId(loginId);
+            if (optionalUserInfo.isPresent()){
+                UserInfo userInfo = optionalUserInfo.get();
+                return userInfo.getUserId();
+            } else {
+                throw new IllegalArgumentException("loginId가" + loginId + "인 계정이 존재하지 않습니다.");
+            }
+        } catch (Exception e) {
+            log.error("userId 검색 중 오류 발생 {}", e.getMessage());
+            throw new RuntimeException("userId 검색 중 오류 발생 " + e.getMessage());
+        }
+    }
 }

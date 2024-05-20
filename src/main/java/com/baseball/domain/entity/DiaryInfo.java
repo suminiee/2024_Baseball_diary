@@ -31,7 +31,7 @@ public class DiaryInfo {
     private String watch;
 
     @Column(nullable = false)
-    private Date gameDate;
+    private String gameDate;
 
     @Column(nullable = false)
     private String time;
