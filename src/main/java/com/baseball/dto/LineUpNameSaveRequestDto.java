@@ -20,6 +20,6 @@ public class LineUpNameSaveRequestDto {
     private String hitter8;
     private String hitter9;
     private String pitcher;
-    private UserInfo userId;
-    private DiaryInfo diaryId;
+    private Long userId;
+    private Long diaryId;
 }

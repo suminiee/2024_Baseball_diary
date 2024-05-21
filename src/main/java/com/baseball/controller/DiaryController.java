@@ -1,6 +1,7 @@
 package com.baseball.controller;
 
 import com.baseball.domain.entity.UserInfo;
+import com.baseball.dto.CombinedDiaryRequestDto;
 import com.baseball.dto.DiarySaveRequestDto;
 import com.baseball.dto.LineUpNameSaveRequestDto;
 import com.baseball.dto.LineUpPositionSaveRequestDto;
@@ -23,16 +24,13 @@ public class DiaryController {
 
     //야구 일기 저장
     @PostMapping("/diary/add")
-    public ResponseEntity<?> addDiary(@RequestBody DiarySaveRequestDto diarySaveRequestDto,
-                                      @RequestBody LineUpNameSaveRequestDto lineUpNameSaveRequestDto,
-                                      @RequestBody LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto,
-                                      HttpSession session
-                                      ) {
+    public ResponseEntity<?> addDiary(@RequestBody CombinedDiaryRequestDto combinedDiaryRequestDto, HttpSession session) {
         try {
             Long userId = (Long) session.getAttribute("userId");
-//            diarySaveRequestDto.setUserId(userId);
-//            System.out.println(diarySaveRequestDto.getUserId());
-            diaryService.saveDiaryInfo(diarySaveRequestDto, userId);
+            Long diaryId = diaryService.saveDiaryInfo(combinedDiaryRequestDto.getDiarySaveRequestDto(), userId);
+//            System.out.println("**********************" + diaryId); 제대로 반환되는거 확인!
+            diaryService.saveLineUpNameInfo(combinedDiaryRequestDto.getLineUpNameSaveRequestDto(), diaryId, userId);
+
             return ResponseEntity.status(HttpStatus.OK).body("야구 일기 저장 성공");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
