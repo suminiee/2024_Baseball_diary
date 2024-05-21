@@ -1,11 +1,10 @@
 package com.baseball.controller;
 
-import com.baseball.domain.entity.UserInfo;
-import com.baseball.dto.CombinedDiaryRequestDto;
 import com.baseball.dto.DiarySaveRequestDto;
 import com.baseball.dto.LineUpNameSaveRequestDto;
-import com.baseball.dto.LineUpPositionSaveRequestDto;
 import com.baseball.service.DiaryService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,12 +23,19 @@ public class DiaryController {
 
     //야구 일기 저장
     @PostMapping("/diary/add")
-    public ResponseEntity<?> addDiary(@RequestBody CombinedDiaryRequestDto combinedDiaryRequestDto, HttpSession session) {
+    public ResponseEntity<?> addDiary(@RequestBody ObjectNode saveObj, HttpSession session) {
         try {
             Long userId = (Long) session.getAttribute("userId");
-            Long diaryId = diaryService.saveDiaryInfo(combinedDiaryRequestDto.getDiarySaveRequestDto(), userId);
+            ObjectMapper mapper = new ObjectMapper();
+            DiarySaveRequestDto diarySaveRequestDto = mapper.treeToValue(saveObj.get("diarySaveRequestDto"), DiarySaveRequestDto.class);
+            LineUpNameSaveRequestDto lineUpNameSaveRequestDto = mapper.treeToValue(saveObj.get("lineUpNameSaveRequestDto"), LineUpNameSaveRequestDto.class);
+
+//            Long diaryId = diaryService.saveDiaryInfo(combinedDiaryRequestDto.getDiarySaveRequestDto(), userId);
+            Long diaryId = diaryService.saveDiaryInfo(diarySaveRequestDto, userId);
+
+            diaryService.saveLineUpNameInfo(lineUpNameSaveRequestDto, diaryId, userId);
 //            System.out.println("**********************" + diaryId); 제대로 반환되는거 확인!
-            diaryService.saveLineUpNameInfo(combinedDiaryRequestDto.getLineUpNameSaveRequestDto(), diaryId, userId);
+//            diaryService.saveLineUpNameInfo(combinedDiaryRequestDto.getLineUpNameSaveRequestDto(), diaryId, userId);
 
             return ResponseEntity.status(HttpStatus.OK).body("야구 일기 저장 성공");
         } catch (Exception e) {
