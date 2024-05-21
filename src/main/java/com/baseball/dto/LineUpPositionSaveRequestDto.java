@@ -19,5 +19,4 @@ public class LineUpPositionSaveRequestDto {
     private String position7;
     private String position8;
     private String position9;
-    private DiaryInfo diaryId;
 }
