@@ -1,15 +1,14 @@
 package com.baseball.service;
 
 import com.baseball.domain.entity.*;
-import com.baseball.dto.DiarySaveRequestDto;
-import com.baseball.dto.LineUpNameSaveRequestDto;
-import com.baseball.dto.LineUpPositionSaveRequestDto;
-import com.baseball.dto.ScoreSaveRequestDto;
+import com.baseball.dto.*;
 import com.baseball.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -145,5 +144,23 @@ public class DiaryServiceImpl implements DiaryService{
             log.error("ScoreInfo 저장 중 오류 발생: {}", e.getMessage());
             throw new RuntimeException("ScoreInfo 저장 중 오류 발생" + e.getMessage());
         }
+    }
+
+    @Override
+    public DiaryResponseDto findDiaryByDiaryId(Long diaryId) {
+        Optional<DiaryInfo> diaryInfoOptional = diaryRepository.findById(diaryId);
+        return diaryInfoOptional.map(DiaryResponseDto::new).orElse(null);
+    }
+
+    @Override
+    public LineUpNameResponseDto findLineUpNameByDiaryId(Long diaryId) {
+        Optional<LineUpNameInfo> lineUpNameResponseDtoOptional = lineUpNameRepository.findByDiaryId(diaryRepository.getById(diaryId));
+        return lineUpNameResponseDtoOptional.map(LineUpNameResponseDto::new).orElse(null);
+    }
+
+    @Override
+    public LineUpPositionResponseDto findLineUpPositionByDiaryId(Long diaryId) {
+        Optional<LineUpPositionInfo> lineupPositionResponseDtoOptional = lineUpPositionRepository.findByDiaryId(diaryRepository.getById(diaryId));
+        return lineupPositionResponseDtoOptional.map(LineUpPositionResponseDto::new).orElse(null);
     }
 }

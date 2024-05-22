@@ -1,9 +1,6 @@
 package com.baseball.controller;
 
-import com.baseball.dto.DiarySaveRequestDto;
-import com.baseball.dto.LineUpNameSaveRequestDto;
-import com.baseball.dto.LineUpPositionSaveRequestDto;
-import com.baseball.dto.ScoreSaveRequestDto;
+import com.baseball.dto.*;
 import com.baseball.service.DiaryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,10 +8,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -46,4 +44,35 @@ public class DiaryController {
         }
 
     }
+
+    //야구 일기 상세 조회
+    @GetMapping("/diary/info")
+    public ResponseEntity<Map<String, Object>> getDiaryDetail(@RequestParam Long diaryId) {
+        DiaryResponseDto diaryResponseDto = diaryService.findDiaryByDiaryId(diaryId);
+        LineUpNameResponseDto lineUpNameResponseDto = diaryService.findLineUpNameByDiaryId(diaryId);
+        LineUpPositionResponseDto lineUpPositionResponseDto = diaryService.findLineUpPositionByDiaryId(diaryId);
+
+
+        Map<String, Object> responseData = new HashMap<>();
+
+        if (diaryResponseDto != null) {
+            responseData.put("diary", diaryResponseDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+        if (lineUpNameResponseDto != null) {
+            responseData.put("lineUpName", lineUpNameResponseDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+        if (lineUpPositionResponseDto != null) {
+            responseData.put("lineUpPosition", lineUpPositionResponseDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
 }
