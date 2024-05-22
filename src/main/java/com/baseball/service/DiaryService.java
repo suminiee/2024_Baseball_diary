@@ -10,4 +10,7 @@ public interface DiaryService {
     DiaryResponseDto findDiaryByDiaryId(Long diaryId);
     LineUpNameResponseDto findLineUpNameByDiaryId(Long diaryId);
     LineUpPositionResponseDto findLineUpPositionByDiaryId(Long diaryId);
+    ScoreResponseDto findScoreByDiaryId(Long diaryId);
+    void updateDiary(DiarySaveRequestDto diarySaveRequestDto, Long diaryId);
+    void updateLineUpName(LineUpNameResponseDto lineUpNameResponseDto, Long diaryId);
 }
