@@ -1,5 +1,6 @@
 package com.baseball.domain.entity;
 
+import com.baseball.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @AllArgsConstructor
 @Entity
 @Table(name = "diaryInfo")
-public class DiaryInfo {
+public class DiaryInfo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
