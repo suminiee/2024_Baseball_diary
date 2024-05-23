@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Slf4j
@@ -202,7 +203,7 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
-    public void updateLineUpName(LineUpNameResponseDto lineUpNameResponseDto, Long diaryId) {
+    public void updateLineUpName(LineUpNameSaveRequestDto lineUpNameSaveRequestDto, Long diaryId) {
         try {
             DiaryInfo diaryInfo = diaryRepository.findById(diaryId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
@@ -212,16 +213,16 @@ public class DiaryServiceImpl implements DiaryService{
                 LineUpNameInfo lineUpNameInfo = optionalLineUpNameInfo.get();
 
                 //주어진 DTO에서 새로운 정보 추출하여 업데이트
-                lineUpNameInfo.setHitter1(lineUpNameInfo.getHitter1());
-                lineUpNameInfo.setHitter2(lineUpNameInfo.getHitter2());
-                lineUpNameInfo.setHitter3(lineUpNameInfo.getHitter3());
-                lineUpNameInfo.setHitter4(lineUpNameInfo.getHitter4());
-                lineUpNameInfo.setHitter5(lineUpNameInfo.getHitter5());
-                lineUpNameInfo.setHitter6(lineUpNameInfo.getHitter6());
-                lineUpNameInfo.setHitter7(lineUpNameInfo.getHitter7());
-                lineUpNameInfo.setHitter8(lineUpNameInfo.getHitter8());
-                lineUpNameInfo.setHitter9(lineUpNameInfo.getHitter9());
-                lineUpNameInfo.setPitcher(lineUpNameInfo.getPitcher());
+                lineUpNameInfo.setHitter1(lineUpNameSaveRequestDto.getHitter1());
+                lineUpNameInfo.setHitter2(lineUpNameSaveRequestDto.getHitter2());
+                lineUpNameInfo.setHitter3(lineUpNameSaveRequestDto.getHitter3());
+                lineUpNameInfo.setHitter4(lineUpNameSaveRequestDto.getHitter4());
+                lineUpNameInfo.setHitter5(lineUpNameSaveRequestDto.getHitter5());
+                lineUpNameInfo.setHitter6(lineUpNameSaveRequestDto.getHitter6());
+                lineUpNameInfo.setHitter7(lineUpNameSaveRequestDto.getHitter7());
+                lineUpNameInfo.setHitter8(lineUpNameSaveRequestDto.getHitter8());
+                lineUpNameInfo.setHitter9(lineUpNameSaveRequestDto.getHitter9());
+                lineUpNameInfo.setPitcher(lineUpNameSaveRequestDto.getPitcher());
 
                 //업데이트 된 정보 저장
                 lineUpNameRepository.save(lineUpNameInfo);
@@ -231,6 +232,79 @@ public class DiaryServiceImpl implements DiaryService{
         } catch (Exception e) {
             log.error("야구 일기 라인업 이름 업데이트 중 오류 발생: {}", e.getMessage());
             throw new RuntimeException("야구 일기 라인업 이름 업데이트 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateLineUpPosition(LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto, Long diaryId) {
+        try {
+            DiaryInfo diaryInfo = diaryRepository.findById(diaryId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            Optional<LineUpPositionInfo> optionalLineUpPositionInfo = lineUpPositionRepository.findByDiaryId(diaryInfo);
+
+            if (optionalLineUpPositionInfo.isPresent()) {
+                LineUpPositionInfo lineUpPositionInfo = optionalLineUpPositionInfo.get();
+
+                //주어진 DTO에서 새로운 정보 추출하여 업데이트
+                lineUpPositionInfo.setPosition1(lineUpPositionSaveRequestDto.getPosition1());
+                lineUpPositionInfo.setPosition2(lineUpPositionSaveRequestDto.getPosition2());
+                lineUpPositionInfo.setPosition3(lineUpPositionSaveRequestDto.getPosition3());
+                lineUpPositionInfo.setPosition4(lineUpPositionSaveRequestDto.getPosition4());
+                lineUpPositionInfo.setPosition5(lineUpPositionSaveRequestDto.getPosition5());
+                lineUpPositionInfo.setPosition6(lineUpPositionSaveRequestDto.getPosition6());
+                lineUpPositionInfo.setPosition7(lineUpPositionSaveRequestDto.getPosition7());
+                lineUpPositionInfo.setPosition8(lineUpPositionSaveRequestDto.getPosition8());
+                lineUpPositionInfo.setPosition9(lineUpPositionSaveRequestDto.getPosition9());
+
+                //업데이트 된 정보 저장
+                lineUpPositionRepository.save(lineUpPositionInfo);
+            } else {
+                throw new IllegalArgumentException("일기 내용을 찾을 수 없습니다. ID: " + diaryId);
+            }
+        } catch (Exception e) {
+            log.error("야구 일기 라인업 포지션 업데이트 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("야구 일기 라인업 포지션 업데이트 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateScore(ScoreSaveRequestDto scoreSaveRequestDto, Long diaryId) {
+        try {
+            DiaryInfo diaryInfo = diaryRepository.findById(diaryId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            Optional<ScoreInfo> optionalScoreInfo = scoreRepository.findByDiaryId(diaryInfo);
+
+            if (optionalScoreInfo.isPresent()) {
+                ScoreInfo scoreInfo = optionalScoreInfo.get();
+
+                //주어진 DTO에서 새로운 정보 추출하여 업데이트
+                scoreInfo.setInning1(scoreSaveRequestDto.getInning1());
+                scoreInfo.setInning2(scoreSaveRequestDto.getInning2());
+                scoreInfo.setInning3(scoreSaveRequestDto.getInning3());
+                scoreInfo.setInning4(scoreSaveRequestDto.getInning4());
+                scoreInfo.setInning5(scoreSaveRequestDto.getInning5());
+                scoreInfo.setInning6(scoreSaveRequestDto.getInning6());
+                scoreInfo.setInning7(scoreSaveRequestDto.getInning7());
+                scoreInfo.setInning8(scoreSaveRequestDto.getInning8());
+                scoreInfo.setInning9(scoreSaveRequestDto.getInning9());
+                scoreInfo.setInning10(scoreSaveRequestDto.getInning10());
+                scoreInfo.setInning11(scoreSaveRequestDto.getInning11());
+                scoreInfo.setInning12(scoreSaveRequestDto.getInning12());
+                scoreInfo.setRun(scoreSaveRequestDto.getRun());
+                scoreInfo.setHit(scoreSaveRequestDto.getHit());
+                scoreInfo.setError(scoreSaveRequestDto.getError());
+                scoreInfo.setBalls(scoreSaveRequestDto.getBalls());
+                scoreInfo.setType(scoreSaveRequestDto.getType());
+
+                //업데이트 된 정보 저장
+                scoreRepository.save(scoreInfo);
+            } else {
+                throw new IllegalArgumentException("일기 내용을 찾을 수 없습니다. ID: " + diaryId);
+            }
+
+        } catch (Exception e) {
+            log.error("야구 일기  점수 업데이트 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("야구 일기 점수 업데이트 중 오류 발생: " + e.getMessage());
         }
     }
 }

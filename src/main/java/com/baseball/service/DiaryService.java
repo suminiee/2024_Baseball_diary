@@ -12,5 +12,7 @@ public interface DiaryService {
     LineUpPositionResponseDto findLineUpPositionByDiaryId(Long diaryId);
     ScoreResponseDto findScoreByDiaryId(Long diaryId);
     void updateDiary(DiarySaveRequestDto diarySaveRequestDto, Long diaryId);
-    void updateLineUpName(LineUpNameResponseDto lineUpNameResponseDto, Long diaryId);
+    void updateLineUpName(LineUpNameSaveRequestDto lineUpNameSaveRequestDto, Long diaryId);
+    void updateLineUpPosition(LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto, Long diaryId);
+    void updateScore(ScoreSaveRequestDto scoreSaveRequestDto, Long diaryId);
 }

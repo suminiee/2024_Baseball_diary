@@ -91,6 +91,9 @@ public class DiaryController {
             ScoreSaveRequestDto scoreSaveRequestDto = mapper.treeToValue(saveObj.get("scoreSaveRequestDto"), ScoreSaveRequestDto.class);
 
             diaryService.updateDiary(diarySaveRequestDto, diaryId);
+            diaryService.updateLineUpName(lineUpNameSaveRequestDto, diaryId);
+            diaryService.updateLineUpPosition(lineUpPositionSaveRequestDto, diaryId);
+            diaryService.updateScore(scoreSaveRequestDto, diaryId);
 
 
             return ResponseEntity.status(HttpStatus.OK).body("야구 일기 업데이트 성공");
