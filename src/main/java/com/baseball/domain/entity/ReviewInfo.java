@@ -1,7 +1,9 @@
 package com.baseball.domain.entity;
 
+import com.baseball.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.w3c.dom.Text;
 
 import java.util.Date;
 
@@ -14,7 +16,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @AllArgsConstructor
 @Entity
 @Table(name = "reviewInfo")
-public class ReviewInfo {
+public class ReviewInfo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -22,11 +24,11 @@ public class ReviewInfo {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userInfo", nullable = false)
-    private UserInfo loginId;
+    private UserInfo userId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "teamInfo", nullable = false)
-    private UserInfo teamId;
+    private TeamInfo teamId;
 
     @Column(nullable = false)
     private String title;
@@ -38,5 +40,7 @@ public class ReviewInfo {
     private String imageAddress;
 
     @Column(nullable = false)
-    private Date visitedAt;
+    private String visitedAt;
+
+
 }
