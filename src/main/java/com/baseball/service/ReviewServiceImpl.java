@@ -3,10 +3,7 @@ package com.baseball.service;
 import com.baseball.domain.entity.ReviewInfo;
 import com.baseball.domain.entity.TeamInfo;
 import com.baseball.domain.entity.UserInfo;
-import com.baseball.dto.DiaryResponseDto;
-import com.baseball.dto.ReviewDetailResponseDto;
-import com.baseball.dto.ReviewListResponseDto;
-import com.baseball.dto.ReviewSaveRequestDto;
+import com.baseball.dto.*;
 import com.baseball.repository.ReviewRepository;
 import com.baseball.repository.TeamRepository;
 import com.baseball.repository.UserRepository;
@@ -86,5 +83,62 @@ public class ReviewServiceImpl implements ReviewService{
                 .flatMap(user -> reviewRepository.findByUserId(user).stream())
                 .map(review -> new ReviewListResponseDto(review, review.getUserId()))
                 .collect(Collectors.toList());
+    }
+
+    //야구장 리뷰 수정
+    @Override
+    public void updateReview(ReviewUpdateRequestDto reviewUpdateRequestDto, Long userId) {
+        try {
+            Optional<ReviewInfo> optionalReviewInfo = reviewRepository.findById(reviewUpdateRequestDto.getReviewId());
+            if (optionalReviewInfo.isPresent()) {
+                ReviewInfo reviewInfo = optionalReviewInfo.get();
+
+                // 세션의 userId와 review의 userId 비교
+                if (!reviewInfo.getUserId().getUserId().equals(userId)) {
+                    throw new IllegalArgumentException("리뷰를 수정할 권한이 없습니다.");
+                }
+
+                // 주어진 DTO에서 새로운 정보 업데이트
+                reviewInfo.setTitle(reviewUpdateRequestDto.getTitle());
+                reviewInfo.setContent(reviewUpdateRequestDto.getContent());
+                reviewInfo.setImageAddress(reviewUpdateRequestDto.getImageAddress());
+                reviewInfo.setVisitedAt(reviewUpdateRequestDto.getVisitedAt());
+
+                // TeamInfo 객체를 가져와서 설정
+                Optional<TeamInfo> optionalTeamInfo = teamRepository.findById(reviewUpdateRequestDto.getTeamId());
+                if (optionalTeamInfo.isPresent()) {
+                    //teamId 변경시 업데이트
+                    reviewInfo.setTeamId(optionalTeamInfo.get());
+                } else {
+                    throw new IllegalArgumentException("팀을 찾을 수 없습니다. ID: " + reviewUpdateRequestDto.getTeamId());
+                }
+
+                reviewRepository.save(reviewInfo);
+            } else {
+                throw new IllegalArgumentException("리뷰를 찾을 수 없습니다. ID: " + reviewUpdateRequestDto.getReviewId());
+            }
+        } catch (Exception e) {
+            log.error("리뷰 수정 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("리뷰 수정 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    //야구장 리뷰 삭제
+    @Override
+    public void deleteReview(Long reviewId, Long userId) {
+        Optional<ReviewInfo> optionalReviewInfo = reviewRepository.findById(reviewId);
+
+        if (optionalReviewInfo.isPresent()) {
+            ReviewInfo reviewInfo = optionalReviewInfo.get();
+
+            // 세션의 userId와 review의 userId 비교
+            if (!reviewInfo.getUserId().getUserId().equals(userId)) {
+                throw new IllegalArgumentException("리뷰를 삭제할 권한이 없습니다.");
+            }
+
+            reviewRepository.delete(reviewInfo);
+        } else {
+            throw new IllegalArgumentException("리뷰를 찾을 수 없습니다. ID: " + reviewId);
+        }
     }
 }
