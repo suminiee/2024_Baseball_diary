@@ -82,7 +82,7 @@ public class DiaryController {
 
     //야구 일기 상세 수정
     @PatchMapping("/diary/info")
-    public ResponseEntity<?> updateDiaryInfo(@RequestBody ObjectNode saveObj, @RequestParam Long diaryId) {
+    public ResponseEntity<?> updateDiaryInfo(@RequestBody ObjectNode saveObj, @RequestParam Long diaryId, HttpSession session) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             DiarySaveRequestDto diarySaveRequestDto = mapper.treeToValue(saveObj.get("diarySaveRequestDto"), DiarySaveRequestDto.class);
@@ -94,7 +94,6 @@ public class DiaryController {
             diaryService.updateLineUpName(lineUpNameSaveRequestDto, diaryId);
             diaryService.updateLineUpPosition(lineUpPositionSaveRequestDto, diaryId);
             diaryService.updateScore(scoreSaveRequestDto, diaryId);
-
 
             return ResponseEntity.status(HttpStatus.OK).body("야구 일기 업데이트 성공");
 
