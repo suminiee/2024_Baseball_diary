@@ -1,4 +1,4 @@
-package com.baseball.controller;
+package com.baseball.restController;
 
 import com.baseball.dto.PasswordUpdateRequestDto;
 import com.baseball.dto.UserInfoUpdateRequestDto;

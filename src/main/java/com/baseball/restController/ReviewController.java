@@ -1,4 +1,4 @@
-package com.baseball.controller;
+package com.baseball.restController;
 
 import com.baseball.dto.ReviewDetailResponseDto;
 import com.baseball.dto.ReviewListResponseDto;
@@ -53,7 +53,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewListResponseDto);
     }
 
-    //야구장 리뷰 검색 - 제목
+    //야구장 리뷰 검색 - 작성자 닉네임
     @GetMapping("/stadiumReview/findReview")
     public ResponseEntity<List<ReviewListResponseDto>> findReviewList(@RequestParam String nickname) {
         List<ReviewListResponseDto> reviewListResponseDtos = reviewService.findReviewByNickname(nickname);

@@ -1,6 +1,5 @@
-package com.baseball.controller;
+package com.baseball.restController;
 
-import com.baseball.domain.entity.UserInfo;
 import com.baseball.dto.UserRequestDto;
 import com.baseball.service.CustomUserDetailService;
 import com.baseball.service.UserService;
