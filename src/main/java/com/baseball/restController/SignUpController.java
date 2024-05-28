@@ -1,4 +1,4 @@
-package com.baseball.controller;
+package com.baseball.restController;
 
 import com.baseball.dto.IsDuplicatedIdRequestDto;
 import com.baseball.dto.IsDuplicatedNicknameRequestDto;

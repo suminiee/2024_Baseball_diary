@@ -1,4 +1,4 @@
-package com.baseball.controller;
+package com.baseball.restController;
 
 import com.baseball.dto.*;
 import com.baseball.service.DiaryService;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
