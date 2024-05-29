@@ -9,4 +9,9 @@ public class TestController {
     public String index() {
         return "beforeLogin";
     }
+
+    @GetMapping("/main")
+    public String main() {
+        return "afterLogin";
+    }
 }
