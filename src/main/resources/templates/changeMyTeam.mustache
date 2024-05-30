@@ -1,0 +1,94 @@
+{{>layouts/loginHeader}}
+<div class="container">
+    <div class="d-flex" style="height: 500px;">
+        <div class="col-md-3 mt-3 d-flex justify-content-center align-items-center">
+            <div>
+                <img src="https://i.namu.wiki/i/2aaR7lMDzjHY9SCIJXgSgeo8L742wE8FttOK8mAqJ1iuMVWKKl3SFFKVHIvMQDgmIUfvxvVc2YDrmbwTeUSz0g.svg"
+                     alt="samsung" class="img-fluid team-image mb-3" style="width: 80%">
+                <h4>현재 설정된 마이 팀: 없음</h4>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h3 class="text-center mt-5 font-weight-bold">마이 팀 변경하기</h3>
+            <div class="row mt-5">
+                <div class="col-12 d-flex flex-wrap  justify-content-center">
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/NuVR7neFequ12CKait0llyWiCG7cIJ0Nmjt1_VGzg4ZqoAduVyLpogESXePJb94T07idc3dC8_458e_dPTrQ6w.svg"
+                             alt="doosan" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/B9hIQukP-418N9W-5o6WddUuxmemYuBIZ65-xMHmRK4hDhipAtFQikphYYlBJ7lr3z0POdWs4n1azM-KOHe3qQ.svg"
+                             alt="lg" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/nhKvnqKXbs7dbPMggKos010RqfYHxUoKgd4GOPjaN8HICce5HXZo6_zAQJPO8SNd-tMEthvTehq7ef-jzuRoww.svg"
+                             alt="kia" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/TN9uwwJvhPk8q26pyOdozaBVNM3uYALhc1BBwGcss1Qyi76fOjNiyeaUuz_4s1INrl5j6KRqDE4rW0gfYSiR6g.svg"
+                             alt="nc" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/yqjUMCPvc2UWmZeqfGrEAHAbo0KNURTUerd4MkFGHZ5GPTC3u07o1h0oOlV1JmihawLZwEzpt3oD3Xua4Irv7A.svg"
+                             alt="lotte" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/2aaR7lMDzjHY9SCIJXgSgeo8L742wE8FttOK8mAqJ1iuMVWKKl3SFFKVHIvMQDgmIUfvxvVc2YDrmbwTeUSz0g.svg"
+                             alt="samsung" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/i0qhQjUqhPst7K_uUfnRJSMSArHuzEvH4aYK01Si3M7YW_ow2jvRbXNzcWGMl7P6QpFZMeyl4t5ayF27mAqLMA.svg"
+                             alt="kiwoom" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/28S4R3aOBxEWMdQB-hhvbpMnmEYQGw7wSpS8aZQ_bdwH61Y-IqX8Zkot9nBVjjty7U5spvDhD9tRC5vqOOUMEA.svg"
+                             alt="hanwha" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/aP-OG15XHXobVNmHgMgWOeMq7zk5yEHRT9ofLuGOygrYkLVQkw2uFfvy9AyrtAHhA9jU1g-f-uX6mbxEde3mtw.svg"
+                             alt="ssg" class="img-fluid team-image">
+                    </div>
+                    <div class="team-container">
+                        <img src="https://i.namu.wiki/i/1I_O46xxWGvTC-arPbfuBwaYgmd0I9gOCfTSchy5Hf5zZ-blf38j7boUFED_abbT5R8Qsj_Ynb-b7x4zxPk4HQ.svg"
+                             alt="kt" class="img-fluid team-image">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                <button type="button" class="btn btn-primary col-3">변경하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .team-container {
+        width: 20%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .team-image {
+        width: 100%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s;
+    }
+    .team-image.selected {
+        border-color: blue;
+    }
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const images = document.querySelectorAll('.team-image');
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                images.forEach(img => img.classList.remove('selected'));
+                image.classList.add('selected');
+            });
+        });
+    });
+</script>
+{{>layouts/footer}}
