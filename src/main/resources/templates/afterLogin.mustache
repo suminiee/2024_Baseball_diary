@@ -1,45 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!-- jquery: bootstrap, datepicker -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
-
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-
-    <!-- 내가 만든 외부 스타일 시트 -->
-    <link rel="stylesheet" type="text/css" href="header.css">
-</head>
-<body>
-<!-- HEADER -->
-<div class="container">
-    <header class="d-flex align-items-center justify-content-center" style="height: 80px; margin-top: 10px;">
-        <!-- 메인 메뉴바 -->
-        <div class="text-center">
-            <h3>Today's</h3>
-            <h3>BASEBALL</h3>
-        </div>
-    </header>
-    <hr>
-    <!-- navigation -->
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-main-tab" data-toggle="tab" data-target="#nav-main" type="button" role="tab" aria-controls="nav-main" aria-selected="true">Main</button>
-            <button class="nav-link" id="nav-login-tab" data-toggle="tab" data-target="#nav-login" type="button" role="tab" aria-controls="nav-login" aria-selected="false">로그인</button>
-            <button class="nav-link" id="nav-signUp-tab" data-toggle="tab" data-target="#nav-signUp" type="button" role="tab" aria-controls="nav-signUp" aria-selected="false">회원가입</button>
-        </div>
-    </nav>
+{{>layouts/loginHeader}}
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-main" role="tabpanel" aria-labelledby="nav-main-tab">main</div>
-        <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">login</div>
-        <div class="tab-pane fade" id="nav-signUp" role="tabpanel" aria-labelledby="nav-signUp-tab">signUp</div>
+        <div class="tab-pane fade show active" id="nav-main" role="tabpanel" aria-labelledby="nav-main-tab">main
+            <div class="bg-success" id="mainContent" style="height: 700px;"> </div>
+        </div>
+        <div class="tab-pane fade" id="nav-writeReview" role="tabpanel" aria-labelledby="nav-writeReview-tab">writeReview
+            <div class="bg-info" id="writeReviewContent" style="height: 700px;"> </div>
+        </div>
+        <div class="tab-pane fade" id="nav-getReview" role="tabpanel" aria-labelledby="nav-getReview-tab">getReview
+            <div class="bg-dark" id="getReviewContent" style="height: 700px;"> </div>
+        </div>
+        <div class="tab-pane fade" id="nav-diary" role="tabpanel" aria-labelledby="nav-diary-tab">diary
+            <div class="bg-danger" id="diaryContent" style="height: 700px;"> </div>
+        </div>
+        <div class="tab-pane fade" id="nav-userInfo" role="tabpanel" aria-labelledby="nav-userInfo-tab">userInfo
+            <div class="bg-warning" id="userInfoContent" style="height: 700px;"> </div>
+        </div>
+        <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">password
+            <div class="bg-white" id="passwordContent" style="height: 700px;"> </div>
+        </div>
+        <div class="tab-pane fade" id="nav-changeTeam" role="tabpanel" aria-labelledby="nav-changeTeam-tab">changeTeam
+            <div class="bg-secondary" id="passwordContent" style="height: 700px;"> </div>
+        </div>
     </div>
-    <div class="bg-success" id="content" style="height: 720px">
-    </div>
-    <div class="bg-info" style="height: 30px; border-top: 1px black">
-    </div>
-</div>
-</body>
-</html>
+{{>layouts/loginFooter}}
