@@ -1,8 +1,11 @@
 package com.baseball.service;
 
+import com.baseball.domain.entity.TeamInfo;
 import com.baseball.domain.entity.UserInfo;
+import com.baseball.dto.MyTeamResponseDto;
 import com.baseball.dto.PasswordUpdateRequestDto;
 import com.baseball.dto.UserInfoUpdateRequestDto;
+import com.baseball.repository.TeamRepository;
 import com.baseball.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -22,6 +25,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    TeamRepository teamRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -112,5 +117,16 @@ public class UserServiceImpl implements UserService{
             log.error("userId 검색 중 오류 발생 {}", e.getMessage());
             throw new RuntimeException("userId 검색 중 오류 발생 " + e.getMessage());
         }
+    }
+
+    @Override
+    public MyTeamResponseDto getMyTeam(Long userId) {
+        UserInfo userInfo = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. ID: " + userId));
+        String myTeam = userInfo.getMyTeam();
+        TeamInfo teamInfo = teamRepository.findByTeamName(myTeam)
+                .orElseThrow(() -> new IllegalArgumentException("팀을 찾을 수 없습니다. 팀 이름 : " + myTeam));
+
+        return new MyTeamResponseDto(userInfo, teamInfo);
     }
 }
