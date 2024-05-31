@@ -1,12 +1,15 @@
 package com.baseball.restController;
 
+import com.baseball.dto.MyTeamResponseDto;
 import com.baseball.dto.PasswordUpdateRequestDto;
+import com.baseball.dto.ReviewDetailResponseDto;
 import com.baseball.dto.UserInfoUpdateRequestDto;
 import com.baseball.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,6 +48,15 @@ public class UserController {
     }
 
     //회원정보 변경 - 프로필사진 추가/변경
+
+    //내가 응원하는 팀이름 + 팀 로고 이미지주소 조회
+    @GetMapping("/getMyTeam")
+    public ResponseEntity<MyTeamResponseDto> getMyTeam(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+
+        MyTeamResponseDto myTeamResponseDto = userService.getMyTeam(userId);
+        return ResponseEntity.ok(myTeamResponseDto);
+    }
 
     //응원팀 변경/설정
     @PutMapping("/changeMyTeam")

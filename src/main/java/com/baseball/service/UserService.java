@@ -1,6 +1,7 @@
 package com.baseball.service;
 
 
+import com.baseball.dto.MyTeamResponseDto;
 import com.baseball.dto.PasswordUpdateRequestDto;
 import com.baseball.dto.UserInfoUpdateRequestDto;
 
@@ -12,5 +13,7 @@ public interface UserService {
     void updateMyTeam(String myTeam, String loginId);
 
     Long findUserId(String loginId);
+
+    MyTeamResponseDto getMyTeam(Long userId);
 
 }

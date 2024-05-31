@@ -1,11 +1,10 @@
 {{>layouts/loginHeader}}
 <div class="container">
     <div class="d-flex" style="height: 500px;">
-        <div class="col-md-3 mt-3 d-flex justify-content-center align-items-center">
+        <div class="col-md-3 mt-3 d-flex justify-content-center align-items-center" style="border-right: 2px solid #ddd;">
             <div>
-                <img src="https://i.namu.wiki/i/2aaR7lMDzjHY9SCIJXgSgeo8L742wE8FttOK8mAqJ1iuMVWKKl3SFFKVHIvMQDgmIUfvxvVc2YDrmbwTeUSz0g.svg"
-                     alt="samsung" class="img-fluid team-image mb-3" style="width: 80%">
-                <h4>현재 설정된 마이 팀: 없음</h4>
+                <img id="my-team-logo" src="" alt="Team-logo" class="img-fluid mb-4" style="width: 80%">
+                <h6 id="my-team-name">현재 설정된 마이 팀: </h6>
             </div>
         </div>
         <div class="col-md-9">
@@ -81,14 +80,40 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const images = document.querySelectorAll('.team-image');
-        images.forEach(image => {
-            image.addEventListener('click', () => {
-                images.forEach(img => img.classList.remove('selected'));
-                image.classList.add('selected');
-            });
+
+    // 페이지가 로드될 때 실행되는 함수
+    window.onload = function() {
+        // AJAX 요청
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/api/getMyTeam", true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status == 200) {
+                    // JSON 데이터 파싱
+                    var data = JSON.parse(xhr.responseText);
+
+                    // 이미지 주소와 팀 이름 설정
+                    document.getElementById("my-team-logo").src = data.teamLogo;
+                    document.getElementById("my-team-name").textContent += data.myTeam;
+                } else {
+                    console.error("Error:", xhr.status);
+                }
+            }
+        };
+
+        // 요청 보내기
+        xhr.send();
+    };
+
+    $(document).ready(function() {
+        const images = $('.team-image');
+        images.on('click', function() {
+            images.removeClass('selected');
+            $(this).addClass('selected');
         });
     });
+
+
 </script>
 {{>layouts/footer}}
