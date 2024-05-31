@@ -33,6 +33,7 @@ public class SignUpServiceImpl implements SignUpService {
                     .email(signUpRequestDto.getEmail())
                     .nickname(signUpRequestDto.getNickname())
                     .name(signUpRequestDto.getName())
+                    .myTeam(signUpRequestDto.getMyTeam())
                     .build();
             signUpRepository.save(userInfo);
 
