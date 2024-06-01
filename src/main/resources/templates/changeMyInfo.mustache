@@ -1,0 +1,108 @@
+{{>layouts/loginHeader}}
+<div class="container">
+    <div class="sign-up-box d-flex align-items-center justify-content-center" style="height: 500px;">
+        <div style="width: 400px;">
+            <h1 class="mt-3 font-weight-bold text-center">회원정보수정</h1>
+
+            <form id="changeMyInfoForm">
+                <span class="sign-up-subject">아이디</span>
+                <div class="d-flex mt-2 mb-3">
+                    <input type="text" id="loginId" name="loginId" class="form-control" readonly>
+                </div>
+
+                <span class="sign-up-subject">닉네임</span>
+                <div class="d-flex mt-3">
+                    <input type="text" id="nickname" name="nickname" class="form-control col-9" placeholder="닉네임을 입력하세요">
+                    <button type="button" id="nicknameCheckBtn" class="btn btn-success ml-2">중복확인</button>
+                </div>
+
+                <!-- 닉네임 체크 결과 -->
+                <div class="mb-3">
+                    <div id="nicknameCheckLength" class="small text-danger d-none">닉네임을 3자 이상 입력해주세요.</div>
+                    <div id="nicknameCheckDuplicated" class="small text-danger d-none">이미 사용중인 닉네임입니다.</div>
+                    <div id="nicknameCheckOk" class="small text-success d-none">사용 가능한 닉네임 입니다.</div>
+                </div>
+
+                <span class="sign-up-subject">이메일</span>
+                <div class="mt-2 mb-3">
+                    <input type="text" id="email" name="email" class="form-control" placeholder="이메일을 입력하세요">
+                </div>
+
+                <br>
+                <div class="d-flex justify-content-center">
+                    <button type="button" id="changeBtn" class="btn btn-info">변경하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // 사용자 정보 가져오기
+        $.ajax({
+            url: '/api/getUserInfo',
+            type: 'GET',
+            success: function(loginId) {
+                $('#loginId').val(loginId);
+            },
+            error: function(xhr) {
+                alert('사용자 정보를 가져오는 중 오류가 발생했습니다: ' + xhr.responseText);
+            }
+        });
+
+        // 닉네임 중복확인
+        $("#nicknameCheckBtn").on('click', function() {
+            // 경고 문구 초기화
+            $("#nicknameCheckLength").addClass("d-none");
+            $("#nicknameCheckDuplicated").addClass("d-none");
+            $("#nicknameCheckOk").addClass("d-none");
+
+            let nickname = $("#nickname").val().trim();
+            if (nickname.length < 3) {
+                $("#nicknameCheckLength").removeClass("d-none");
+                return;
+            }
+
+            // AJAX - 중복확인
+            $.ajax({
+                url: '/api/signUp/isDuplicatedNickname',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ nickname: nickname }),
+                success: function(data) {
+                    if (data === true) {
+                        $("#nicknameCheckDuplicated").removeClass("d-none");
+                        $("#nicknameCheckOk").addClass("d-none");
+                    } else {
+                        $("#nicknameCheckOk").removeClass("d-none");
+                        $("#nicknameCheckDuplicated").addClass("d-none");
+                    }
+                },
+                error: function() {
+                    alert('Error occurred while checking nickname.');
+                }
+            });
+        });
+
+        // 변경하기 버튼 클릭 이벤트
+        $('#changeBtn').on('click', function() {
+            const nickname = $('#nickname').val();
+            const email = $('#email').val();
+
+            $.ajax({
+                url: '/api/changeMyInfo',
+                type: 'PATCH',
+                contentType: 'application/json',
+                data: JSON.stringify({ nickname: nickname, email: email }),
+                success: function(response) {
+                    alert('회원 정보가 변경되었습니다.');
+                },
+                error: function(xhr) {
+                    alert('회원 정보를 변경하는 중 오류가 발생했습니다: ' + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+{{>layouts/loginFooter}}

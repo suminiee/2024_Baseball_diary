@@ -1,5 +1,6 @@
 package com.baseball.restController;
 
+import com.baseball.domain.entity.UserInfo;
 import com.baseball.dto.MyTeamResponseDto;
 import com.baseball.dto.PasswordUpdateRequestDto;
 import com.baseball.dto.ReviewDetailResponseDto;
@@ -47,6 +48,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("회원정보 변경중 오류 발생 " + e.getMessage());
         }
+    }
+
+    //회원정보 변경 - 아이디 조회
+    @GetMapping("/getUserInfo")
+    public String getUserInfo(HttpSession session) {
+        String loginId = (String)session.getAttribute("loginId");
+        return loginId;
     }
 
     //회원정보 변경 - 프로필사진 추가/변경
