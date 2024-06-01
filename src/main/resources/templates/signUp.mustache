@@ -226,7 +226,7 @@
                 data: JSON.stringify(formData),
                 success: function(data) {
                     alert("가입을 환영합니다. 로그인 해주세요.");
-                    window.location.href = "/beforeLogin"; // 로그인 화면 이동
+                    window.location.href = "/login"; // 로그인 화면 이동
                 },
                 error: function(xhr) {
                     alert('회원가입 중 오류가 발생했습니다: ' + xhr.responseText);
