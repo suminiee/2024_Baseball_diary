@@ -40,4 +40,8 @@ public class PageController {
     public String changeMyInfo(Model model) {
         return "changeMyInfo";
     }
+
+    //비밀번호 변경 페이지
+    @GetMapping("/changePassword")
+    public String changePassword() { return "changePassword"; }
 }
