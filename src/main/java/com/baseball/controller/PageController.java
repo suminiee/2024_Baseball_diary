@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class TestController {
+public class PageController {
 
     //로그인 전 메인페이지
     @GetMapping("/")

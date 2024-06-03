@@ -4,18 +4,16 @@ import com.baseball.domain.entity.TeamInfo;
 import com.baseball.domain.entity.UserInfo;
 import com.baseball.dto.MyTeamResponseDto;
 import com.baseball.dto.PasswordUpdateRequestDto;
+import com.baseball.dto.UserInfoResponseDto;
 import com.baseball.dto.UserInfoUpdateRequestDto;
 import com.baseball.repository.TeamRepository;
 import com.baseball.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Slf4j
@@ -128,5 +126,14 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new IllegalArgumentException("팀을 찾을 수 없습니다. 팀 이름 : " + myTeam));
 
         return new MyTeamResponseDto(userInfo, teamInfo);
+    }
+
+    @Override
+    public UserInfoResponseDto getUserInfo(Long userId) {
+        UserInfo userInfo = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. ID: " + userId));
+
+
+        return new UserInfoResponseDto(userInfo);
     }
 }

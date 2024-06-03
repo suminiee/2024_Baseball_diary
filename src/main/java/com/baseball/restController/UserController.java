@@ -1,10 +1,7 @@
 package com.baseball.restController;
 
 import com.baseball.domain.entity.UserInfo;
-import com.baseball.dto.MyTeamResponseDto;
-import com.baseball.dto.PasswordUpdateRequestDto;
-import com.baseball.dto.ReviewDetailResponseDto;
-import com.baseball.dto.UserInfoUpdateRequestDto;
+import com.baseball.dto.*;
 import com.baseball.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -50,11 +47,13 @@ public class UserController {
         }
     }
 
-    //회원정보 변경 - 아이디 조회
+    //회원정보 변경 - 아이디, 이메일, 닉네임 조회
     @GetMapping("/getUserInfo")
-    public String getUserInfo(HttpSession session) {
-        String loginId = (String)session.getAttribute("loginId");
-        return loginId;
+    public ResponseEntity<UserInfoResponseDto> getUserInfo(HttpSession session) {
+        Long userId = (Long)session.getAttribute("userId");
+        UserInfoResponseDto userInfoResponseDto = userService.getUserInfo(userId);
+
+        return ResponseEntity.ok(userInfoResponseDto);
     }
 
     //회원정보 변경 - 프로필사진 추가/변경
