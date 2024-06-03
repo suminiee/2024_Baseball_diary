@@ -1,21 +1,20 @@
 package com.baseball.controller;
 
+import com.baseball.crawling.Ranking;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class PageController {
 
     //로그인 전 메인페이지
-    @GetMapping("/")
-    public String main() {
-        return "main";
-    }
+    //rankingController로 이동
 
     //로그인 후 메인페이지
-    @GetMapping("/main")
-    public String loginMain() { return "afterLoginMain";}
+    //rankingController로 이동
 
     //회원가입 페이지
     @GetMapping("/signUp")

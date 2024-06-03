@@ -1,3 +1,48 @@
 {{>layouts/header}}
 
+<div class="container">
+    <div>
+        <h3 class="mt-3 mb-3">KBO 리그 순위</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>순위</th>
+                <th>팀</th>
+                <th>경기 수</th>
+                <th>승</th>
+                <th>패</th>
+                <th>무</th>
+                <th>승률</th>
+                <th>게임차</th>
+                <th>연속</th>
+                <th>출루율</th>
+                <th>장타율</th>
+                <th>최근 10경기</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#rankings}}
+                <tr>
+                    <td>{{rank}}</td>
+                    <td>{{team}}</td>
+                    <td>{{gcnts}}</td>
+                    <td>{{wpnt}}</td>
+                    <td>{{lpnt}}</td>
+                    <td>{{dpnt}}</td>
+                    <td>{{wnrt}}</td>
+                    <td>{{wlpnt}}</td>
+                    <td>{{streak}}</td>
+                    <td>{{onbase}}</td>
+                    <td>{{slugging}}</td>
+                    <td>{{lately}}</td>
+                </tr>
+            {{/rankings}}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
 {{>layouts/footer}}
