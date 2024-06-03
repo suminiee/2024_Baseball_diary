@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class TestController {
+public class PageController {
 
     //로그인 전 메인페이지
     @GetMapping("/")
@@ -40,4 +40,8 @@ public class TestController {
     public String changeMyInfo(Model model) {
         return "changeMyInfo";
     }
+
+    //비밀번호 변경 페이지
+    @GetMapping("/changePassword")
+    public String changePassword() { return "changePassword"; }
 }
