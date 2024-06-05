@@ -1,0 +1,25 @@
+{{>layouts/header}}
+
+<div class="container">
+    <h3 class="mt-3 mb-3">오늘의 경기 일정</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>시간</th>
+            <th>팀</th>
+            <th>결과</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#schedule}}
+            <tr>
+                <td>{{time}}</td>
+                <td>{{teams}}</td>
+                <td>{{result}}</td>
+            </tr>
+        {{/schedule}}
+        </tbody>
+    </table>
+</div>
+
+{{>layouts/footer}}
