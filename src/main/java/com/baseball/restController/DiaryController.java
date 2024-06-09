@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -106,25 +107,15 @@ public class DiaryController {
     }
 
     //주어진 날짜에 일기 존재하는지 확인
-    @GetMapping("/check")
-    public ResponseEntity<Boolean> checkDiary(@RequestParam String gameDate) {
-        boolean diaryExists = diaryService.checkDiaryExists(gameDate);
-        return ResponseEntity.ok(diaryExists);
+    @GetMapping("/api/diary/check")
+    public ResponseEntity<Map<String, Boolean>> checkDiary(@RequestParam String date) {
+        boolean exists = diaryService.existsByDate(date);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", exists);
+        return ResponseEntity.ok(response);
     }
+    // 일기 쓰기 페이지로 이동
 
-    //full calendar
-    @GetMapping("/events")
-    public List<DiaryEvent> getDiaryEvents() {
-        List<DiaryInfo> diaryInfos = diaryService.getAllDiaries();
-        List<DiaryEvent> events = new ArrayList<>();
 
-        for (DiaryInfo diary : diaryInfos) {
-            DiaryEvent event = new DiaryEvent();
-            event.setTitle("Diary");
-            event.setStart(diary.getGameDate());
-            events.add(event);
-        }
 
-        return events;
-    }
 }

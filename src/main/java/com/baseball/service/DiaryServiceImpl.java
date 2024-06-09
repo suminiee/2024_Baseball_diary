@@ -310,12 +310,9 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     @Override
-    public boolean checkDiaryExists(String gameDate) {
-        return diaryRepository.existsByGameDate(gameDate);
+    public boolean existsByDate(String date) {
+        return diaryRepository.existsByGameDate(date);
     }
 
-    @Override
-    public List<DiaryInfo> getAllDiaries() {
-        return diaryRepository.findAll();
-    }
+
 }

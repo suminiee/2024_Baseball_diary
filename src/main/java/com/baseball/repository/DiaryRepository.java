@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface DiaryRepository extends JpaRepository<DiaryInfo, Long> {
     boolean existsByGameDate(String gameDate);
-    List<DiaryInfo> findAll();
 }

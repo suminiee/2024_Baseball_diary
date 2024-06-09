@@ -18,6 +18,5 @@ public interface DiaryService {
     void updateLineUpName(LineUpNameSaveRequestDto lineUpNameSaveRequestDto, Long diaryId);
     void updateLineUpPosition(LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto, Long diaryId);
     void updateScore(ScoreSaveRequestDto scoreSaveRequestDto, Long diaryId);
-    boolean checkDiaryExists(String gameDate);
-    List<DiaryInfo> getAllDiaries();
+    boolean existsByDate(String date);
 }
