@@ -1,0 +1,151 @@
+{{>layouts/loginHeader}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        .calendar {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+            text-align: center;
+        }
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .calendar th, .calendar td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .calendar th {
+            background-color: #f2f2f2;
+        }
+        .calendar .today {
+            background-color: green;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            line-height: 24px;
+        }
+        .calendar .btn {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .calendar .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calendar">
+    <div class="navigation mt-4">
+        <button onclick="prevMonth()" class="btn btn-primary">&lt;</button>
+        <span id="monthYear"></span>
+        <button onclick="nextMonth()" class="btn btn-primary">&gt;</button>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THU</th>
+            <th>FRI</th>
+            <th>SAT</th>
+            <th>SUN</th>
+        </tr>
+        </thead>
+        <tbody id="calendarBody">
+        <!-- Calendar dates will be inserted here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    async function loadCalendar(month, year) {
+        const firstDay = (new Date(year, month)).getDay();
+        const daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+        const calendarBody = document.getElementById('calendarBody');
+        calendarBody.innerHTML = "";
+
+        document.getElementById('monthYear').innerText = `${monthNames[month]} ${year}`;
+
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+            let row = document.createElement('tr');
+
+            for (let j = 0; j < 7; j++) {
+                let cell = document.createElement('td');
+
+                if (i === 0 && j < firstDay) {
+                    let cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                } else if (date > daysInMonth) {
+                    break;
+                } else {
+                    let cellText = document.createTextNode(date);
+
+                    if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+                        let span = document.createElement('span');
+                        span.className = 'today';
+                        span.appendChild(cellText);
+                        cell.appendChild(span);
+                    } else {
+                        cell.appendChild(cellText);
+                    }
+
+                    if (new Date(year, month, date) <= today) {
+                        let response = await fetch(`/api/diary/check?date=${year}-${month + 1}-${date}`);
+                        let diaryExists = await response.json();
+
+                        let button = document.createElement('button');
+                        button.className = 'btn btn-secondary';
+                        button.innerText = diaryExists ? '일기 확인' : '일기 쓰기';
+                        button.onclick = () => {
+                            window.location.href = diaryExists
+                                    ? `/diary/view/${year}-${month + 1}-${date}`
+                                    : `/diary/write/${year}-${month + 1}-${date}`;
+                        };
+                        cell.appendChild(document.createElement('br'));
+                        cell.appendChild(button);
+                    }
+                    date++;
+                }
+                row.appendChild(cell);
+            }
+            calendarBody.appendChild(row);
+        }
+    }
+
+    function prevMonth() {
+        currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+        currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+        loadCalendar(currentMonth, currentYear);
+    }
+
+    function nextMonth() {
+        currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+        currentMonth = (currentMonth + 1) % 12;
+        loadCalendar(currentMonth, currentYear);
+    }
+
+    window.onload = function() {
+        loadCalendar(currentMonth, currentYear);
+    };
+</script>
+
+{{>layouts/loginFooter}}

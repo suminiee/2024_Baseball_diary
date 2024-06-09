@@ -22,15 +22,15 @@ public class RankingController {
         List<Ranking> rankingList = rankingService.scrapeRank();
         model.addAttribute("rankings", rankingList);
 
-        List<PitchingRecord> winRecords = recordService.scrapeWins();
-        List<PitchingRecord> eraRecords = recordService.scrapeEra();
-        List<BattingRecord> battingAvgRecords = recordService.scrapeBattingAvg();
-        List<BattingRecord> homeRunRecords = recordService.scrapeHomeRuns();
-
-        model.addAttribute("winRecords", winRecords);
-        model.addAttribute("eraRecords", eraRecords);
-        model.addAttribute("battingAvgRecords", battingAvgRecords);
-        model.addAttribute("homeRunRecords", homeRunRecords);
+//        List<PitchingRecord> winRecords = recordService.scrapeWins();
+//        List<PitchingRecord> eraRecords = recordService.scrapeEra();
+//        List<BattingRecord> battingAvgRecords = recordService.scrapeBattingAvg();
+//        List<BattingRecord> homeRunRecords = recordService.scrapeHomeRuns();
+//
+//        model.addAttribute("winRecords", winRecords);
+//        model.addAttribute("eraRecords", eraRecords);
+//        model.addAttribute("battingAvgRecords", battingAvgRecords);
+//        model.addAttribute("homeRunRecords", homeRunRecords);
 
         return "main";
     }
@@ -43,4 +43,5 @@ public class RankingController {
 
         return "afterLoginMain";
     }
+
 }

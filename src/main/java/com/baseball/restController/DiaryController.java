@@ -101,4 +101,11 @@ public class DiaryController {
                     .body("야구 일기 업데이트 중 오류 발생 " + e.getMessage());
         }
     }
+
+    //주어진 날짜에 일기 존재하는지 확인
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkDiary(@RequestParam String gameDate) {
+        boolean diaryExists = diaryService.checkDiaryExists(gameDate);
+        return ResponseEntity.ok(diaryExists);
+    }
 }

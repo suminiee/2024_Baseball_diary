@@ -307,4 +307,9 @@ public class DiaryServiceImpl implements DiaryService{
             throw new RuntimeException("야구 일기 점수 업데이트 중 오류 발생: " + e.getMessage());
         }
     }
+
+    @Override
+    public boolean checkDiaryExists(String gameDate) {
+        return diaryRepository.existsByGameDate(gameDate);
+    }
 }

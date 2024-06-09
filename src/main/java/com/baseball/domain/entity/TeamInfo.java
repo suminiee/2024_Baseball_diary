@@ -37,4 +37,7 @@ public class TeamInfo {
 
     @Column
     private String coordinate;
+
+    @Column(columnDefinition = "TEXT")
+    private String weatherPage;
 }

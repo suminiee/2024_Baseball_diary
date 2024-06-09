@@ -1,6 +1,5 @@
 package com.baseball.restController;
 
-import com.baseball.domain.entity.UserInfo;
 import com.baseball.dto.*;
 import com.baseball.service.UserService;
 import jakarta.servlet.http.HttpSession;
