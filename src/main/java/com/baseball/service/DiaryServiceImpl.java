@@ -10,6 +10,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -307,4 +308,11 @@ public class DiaryServiceImpl implements DiaryService{
             throw new RuntimeException("야구 일기 점수 업데이트 중 오류 발생: " + e.getMessage());
         }
     }
+
+    @Override
+    public boolean existsByDate(String date) {
+        return diaryRepository.existsByGameDate(date);
+    }
+
+
 }

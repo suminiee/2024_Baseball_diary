@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserInfo, Long> {
-    Optional<UserInfo> findByPassword(String currentPassword);
-
     Optional<UserInfo> findByLoginId (String loginId);
     List<UserInfo> findByNicknameContaining(String nickname);
+
+    UserInfo findByUserId(Long userId);
 }

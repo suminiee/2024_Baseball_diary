@@ -1,5 +1,6 @@
 package com.baseball.restController;
 
+import com.baseball.domain.entity.DiaryInfo;
 import com.baseball.dto.*;
 import com.baseball.service.DiaryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +9,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -101,4 +105,17 @@ public class DiaryController {
                     .body("야구 일기 업데이트 중 오류 발생 " + e.getMessage());
         }
     }
+
+    //주어진 날짜에 일기 존재하는지 확인
+    @GetMapping("/api/diary/check")
+    public ResponseEntity<Map<String, Boolean>> checkDiary(@RequestParam String date) {
+        boolean exists = diaryService.existsByDate(date);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", exists);
+        return ResponseEntity.ok(response);
+    }
+    // 일기 쓰기 페이지로 이동
+
+
+
 }

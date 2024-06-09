@@ -1,6 +1,7 @@
 package com.baseball.service;
 
 
+import com.baseball.domain.entity.UserInfo;
 import com.baseball.dto.MyTeamResponseDto;
 import com.baseball.dto.PasswordUpdateRequestDto;
 import com.baseball.dto.UserInfoResponseDto;
