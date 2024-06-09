@@ -46,7 +46,7 @@ public class PageController {
     public String changePassword() { return "changePassword"; }
 
     //야구일기
-    @GetMapping("/calendar")
+    @GetMapping("/diary")
     public String diary() {
         return "calendar";
     }

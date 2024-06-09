@@ -10,6 +10,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -311,5 +312,10 @@ public class DiaryServiceImpl implements DiaryService{
     @Override
     public boolean checkDiaryExists(String gameDate) {
         return diaryRepository.existsByGameDate(gameDate);
+    }
+
+    @Override
+    public List<DiaryInfo> getAllDiaries() {
+        return diaryRepository.findAll();
     }
 }

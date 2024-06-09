@@ -1,6 +1,9 @@
 package com.baseball.service;
 
+import com.baseball.domain.entity.DiaryInfo;
 import com.baseball.dto.*;
+
+import java.util.List;
 
 public interface DiaryService {
     Long saveDiaryInfo(DiarySaveRequestDto diarySaveRequestDto, Long userId);
@@ -16,4 +19,5 @@ public interface DiaryService {
     void updateLineUpPosition(LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto, Long diaryId);
     void updateScore(ScoreSaveRequestDto scoreSaveRequestDto, Long diaryId);
     boolean checkDiaryExists(String gameDate);
+    List<DiaryInfo> getAllDiaries();
 }

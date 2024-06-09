@@ -1,5 +1,6 @@
 package com.baseball.restController;
 
+import com.baseball.domain.entity.DiaryInfo;
 import com.baseball.dto.*;
 import com.baseball.service.DiaryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -107,5 +110,21 @@ public class DiaryController {
     public ResponseEntity<Boolean> checkDiary(@RequestParam String gameDate) {
         boolean diaryExists = diaryService.checkDiaryExists(gameDate);
         return ResponseEntity.ok(diaryExists);
+    }
+
+    //full calendar
+    @GetMapping("/events")
+    public List<DiaryEvent> getDiaryEvents() {
+        List<DiaryInfo> diaryInfos = diaryService.getAllDiaries();
+        List<DiaryEvent> events = new ArrayList<>();
+
+        for (DiaryInfo diary : diaryInfos) {
+            DiaryEvent event = new DiaryEvent();
+            event.setTitle("Diary");
+            event.setStart(diary.getGameDate());
+            events.add(event);
+        }
+
+        return events;
     }
 }
