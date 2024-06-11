@@ -1,20 +1,17 @@
 {{>layouts/loginHeader}}
 <title>Today's BASEBALL</title>
 <style>
-    .container {
-        width: 1000px;
-        height: 600px;
-        margin: auto;
-        border: 1px solid #ddd;
-        padding: 20px;
-        box-sizing: border-box;
-    }
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 2px solid black;
         padding-bottom: 10px;
+    }
+    .date {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
     .line-up, .game {
         width: 48%;
@@ -49,30 +46,17 @@
 <body>
 <div class="container">
     <div class="header">
-        <div>
+        <div class="mt-3">
             <h3>Today's</h3>
             <h3>BASEBALL</h3>
         </div>
-        <div>
+        <div class="date">
             DATE: {{date}}
         </div>
     </div>
 
     <div class="content">
-        <div class="line-up">
-            <label for="stadium">Baseball Stadium</label>
-            <select id="stadium" name="stadium">
-                <option value="대구삼성라이온즈파크">대구삼성라이온즈파크</option>
-                <option value="잠실야구장">잠실야구장</option>
-                <option value="고척스카이돔">고척스카이돔</option>
-                <option value="수원KT위즈파크">수원KT위즈파크</option>
-                <option value="인천SSG랜더스필드">인천SSG랜더스필드</option>
-                <option value="한화생명이글스파크">한화생명이글스파크</option>
-                <option value="광주기아챔피언스필드">광주기아챔피언스필드</option>
-                <option value="사직야구장">사직야구장</option>
-                <option value="창원NC파크">창원NC파크</option>
-            </select>
-
+        <div class="line-up mt-3">
             <h4>LINE-UP</h4>
             <table>
                 <thead>
@@ -84,21 +68,101 @@
                 <tbody>
                 {{#lineUp}}
                     <tr>
-                        <td><input type="text" name="lineUpPosition" value="{{position}}"></td>
-                        <td><input type="text" name="lineUpName" value="{{name}}"></td>
+                        <td><input type="text" id="lineUpPosition{{@index}}" name="lineUpPosition" value="{{position}}"></td>
+                        <td><input type="text" id="lineUpName{{@index}}" name="lineUpName" value="{{name}}"></td>
                     </tr>
                 {{/lineUp}}
                 {{^lineUp}}
                     <tr>
-                        <td><input type="text" name="lineUpPosition"></td>
-                        <td><input type="text" name="lineUpName"></td>
+                        <td><input type="text" id="lineUpPosition1" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName1" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition2" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName2" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition3" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName3" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition4" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName4" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition5" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName5" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition6" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName6" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition7" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName7" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition8" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName8" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPosition9" class="form-control" name="lineUpPosition"></td>
+                        <td><input type="text" id="lineUpName9" class="form-control" name="lineUpName"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="lineUpPositionPitcher" class="form-control" name="lineUpPosition" value="pitcher" readonly></td>
+                        <td><input type="text" id="lineUpNamePitcher" class="form-control" name="lineUpName"></td>
                     </tr>
                 {{/lineUp}}
                 </tbody>
             </table>
         </div>
 
-        <div class="game">
+        <div class="game mt-3 ml-3">
+
+            <div class="mt-5 mb-4">
+                <h4>Baseball Stadium</h4>
+                <select class="form-select" id="stadium" name="stadium">
+                    <option disabled selected>야구장을 선택하세요</option>
+                    <option value="대구삼성라이온즈파크">대구삼성라이온즈파크</option>
+                    <option value="잠실야구장">잠실야구장</option>
+                    <option value="고척스카이돔">고척스카이돔</option>
+                    <option value="수원KT위즈파크">수원KT위즈파크</option>
+                    <option value="인천SSG랜더스필드">인천SSG랜더스필드</option>
+                    <option value="한화생명이글스파크">한화생명이글스파크</option>
+                    <option value="광주기아챔피언스필드">광주기아챔피언스필드</option>
+                    <option value="사직야구장">사직야구장</option>
+                    <option value="창원NC파크">창원NC파크</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <h4>DATE</h4>
+                <input type="text" class="date-input form-control" id="gameDate" name="gameDate" placeholder="202X-XX-XX" style="width: 150px;" >
+            </div>
+
+            <div class="mb-4">
+                <h4>TIME</h4>
+                <select class="form-select" id="time" name="time">
+                    <option disabled selected>시간을 선택하세요</option>
+                    <option value="14:00">14:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <h4>WATCH</h4>
+                <select class="form-select" id="watch" name="watch">
+                    <option disabled selected>시청방법을 선택하세요</option>
+                    <option value="집관">집관</option>
+                    <option value="직관">직관</option>
+                    <option value="우천취소">우천취소</option>
+                </select>
+            </div>
+
+
             <h4>GAME</h4>
             <table>
                 <tr>
@@ -108,7 +172,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <select id="homeTeam" name="homeTeam">
+                        <select class="form-select" id="homeTeam" name="homeTeam">
+                            <option disabled selected>팀을 선택하세요</option>
                             <option value="삼성라이온즈">삼성라이온즈</option>
                             <option value="롯데자이언츠">롯데자이언츠</option>
                             <option value="기아타이거즈">기아타이거즈</option>
@@ -127,7 +192,8 @@
                         <input type="text" class="score-input" id="awayScore" name="awayScore">
                     </td>
                     <td>
-                        <select id="awayTeam" name="awayTeam">
+                        <select class="form-select" id="awayTeam" name="awayTeam">
+                            <option disabled selected>팀을 선택하세요</option>
                             <option value="삼성라이온즈">삼성라이온즈</option>
                             <option value="롯데자이언츠">롯데자이언츠</option>
                             <option value="기아타이거즈">기아타이거즈</option>
@@ -143,122 +209,90 @@
                 </tr>
             </table>
 
-            <h4>TEAM</h4>
-            <table>
-                <thead>
-                <tr>
-                    <th id="homeTeamName">HOME</th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    <th>6</th>
-                    <th>7</th>
-                    <th>8</th>
-                    <th>9</th>
-                    <th>10</th>
-                    <th>11</th>
-                    <th>12</th>
-                    <th>R</th>
-                    <th>H</th>
-                    <th>E</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input type="text" id="homeTeamNameRow" value="{{homeTeam}}"></td>
-                    {{#homeScores}}
-                        <td><input type="text" name="homeScores" value="{{score}}"></td>
-                    {{/homeScores}}
-                    {{^homeScores}}
-                        <td><input type="text" name="homeScores"></td>
-                    {{/homeScores}}
-                </tr>
-                <tr>
-                    <td><input type="text" id="awayTeamNameRow" value="{{awayTeam}}"></td>
-                    {{#awayScores}}
-                        <td><input type="text" name="awayScores" value="{{score}}"></td>
-                    {{/awayScores}}
-                    {{^awayScores}}
-                        <td><input type="text" name="awayScores"></td>
-                    {{/awayScores}}
-                </tr>
-                </tbody>
-            </table>
-
-            <div class="mvp">
-                <label for="mvp">MY MVP</label>
-                <input type="text" id="mvp" name="mvp">
+            <div class="mvp mt-4">
+                <h4>MY MVP</h4>
+                <input type="text" id="mvp" class="form-control" style="width: 150px;" name="mvp">
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        <button type="button" onclick="saveDiary()">작성완료</button>
+    <div class="footer mt-3">
+        <button type="button" class="btn btn-info" id="saveDiaryButton">작성완료</button>
     </div>
 </div>
 
 <script>
-    function saveDiary() {
-        const lineUpRows = document.querySelectorAll('.line-up tbody tr');
-        const lineUpData = Array.from(lineUpRows).map(row => {
-            return {
-                position: row.querySelector('input[name="lineUpPosition"]').value,
-                name: row.querySelector('input[name="lineUpName"]').value
+    document.addEventListener("DOMContentLoaded", function() {
+        const stadiumSelect = document.getElementById("stadium");
+        const homeTeamSelect = document.getElementById("homeTeam");
+        const awayTeamSelect = document.getElementById("awayTeam");
+
+        stadiumSelect.value = "";
+        homeTeamSelect.value = "";
+        awayTeamSelect.value = "";
+    });
+
+    $(document).ready(function() {
+        $("#saveDiaryButton").click(function(event) {
+            event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+            var diarySaveRequestDto = {
+                away: $("#awayTeam").val(),
+                home: $("#homeTeam").val(),
+                gameDate: $("#gameDate").val(),
+                awayScore: $("#awayScore").val(),
+                homeScore: $("#homeScore").val(),
+                mvp: $("#mvp").val(),
+                stadium: $("#stadium").val(),
+                time: $("#time").val(),
+                watch: $("#watch").val()
             };
+
+            var lineUpNameSaveRequestDto = {
+                hitter1: $("#lineUpName1").val(),
+                hitter2: $("#lineUpName2").val(),
+                hitter3: $("#lineUpName3").val(),
+                hitter4: $("#lineUpName4").val(),
+                hitter5: $("#lineUpName5").val(),
+                hitter6: $("#lineUpName6").val(),
+                hitter7: $("#lineUpName7").val(),
+                hitter8: $("#lineUpName8").val(),
+                hitter9: $("#lineUpName9").val(),
+                pitcher: $("#lineUpNamePitcher").val()
+            };
+
+            var lineUpPositionSaveRequestDto = {
+                position1: $("#lineUpPosition1").val(),
+                position2: $("#lineUpPosition2").val(),
+                position3: $("#lineUpPosition3").val(),
+                position4: $("#lineUpPosition4").val(),
+                position5: $("#lineUpPosition5").val(),
+                position6: $("#lineUpPosition6").val(),
+                position7: $("#lineUpPosition7").val(),
+                position8: $("#lineUpPosition8").val(),
+                position9: $("#lineUpPosition9").val()
+            };
+
+            // AJAX 요청 전송
+            $.ajax({
+                url: "/api/diary/add",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    diarySaveRequestDto: diarySaveRequestDto,
+                    lineUpNameSaveRequestDto: lineUpNameSaveRequestDto,
+                    lineUpPositionSaveRequestDto: lineUpPositionSaveRequestDto
+                }),
+                success: function(response) {
+                    alert("야구 일기 저장 성공");
+                    window.location.href = "/diary";  // 저장에 성공하면 /diary로 이동
+                },
+                error: function(error) {
+                    alert("야구 일기 저장 중 오류 발생: " + error.responseText);
+                }
+            });
+
         });
-
-        const homeScoreCells = document.querySelectorAll('input[name="homeScores"]');
-        const homeScoreData = Array.from(homeScoreCells).map(cell => cell.value);
-
-        const awayScoreCells = document.querySelectorAll('input[name="awayScores"]');
-        const awayScoreData = Array.from(awayScoreCells).map(cell => cell.value);
-
-        const data = {
-            stadium: document.getElementById('stadium').value,
-            date: '{{date}}',
-            homeTeam: document.getElementById('homeTeam').value,
-            awayTeam: document.getElementById('awayTeam').value,
-            homeScore: document.getElementById('homeScore').value,
-            awayScore: document.getElementById('awayScore').value,
-            mvp: document.getElementById('mvp').value,
-            lineUp: lineUpData,
-            homeScores: homeScoreData,
-            awayScores: awayScoreData
-        };
-
-        $.ajax({
-            url: '/api/diary/add',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(response) {
-                alert('일기가 성공적으로 저장되었습니다.');
-                window.location.href = '/diary/list';
-            },
-            error: function(error) {
-                console.error('Error:', error);
-                alert('일기 저장에 실패했습니다.');
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const homeTeam = document.getElementById('homeTeam');
-        const awayTeam = document.getElementById('awayTeam');
-        const homeTeamNameRow = document.getElementById('homeTeamNameRow');
-        const awayTeamNameRow = document.getElementById('awayTeamNameRow');
-
-        function updateTeamNames() {
-            homeTeamNameRow.value = homeTeam.value;
-            awayTeamNameRow.value = awayTeam.value;
-        }
-
-        homeTeam.addEventListener('change', updateTeamNames);
-        awayTeam.addEventListener('change', updateTeamNames);
-
-        updateTeamNames(); // Initialize on load
     });
 </script>
 
