@@ -1,21 +1,22 @@
 package com.baseball.restController;
 
 import com.baseball.domain.entity.DiaryInfo;
+import com.baseball.domain.entity.UserInfo;
 import com.baseball.dto.*;
+import com.baseball.repository.DiaryRepository;
+import com.baseball.repository.UserRepository;
 import com.baseball.service.DiaryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -23,6 +24,11 @@ import java.util.Map;
 public class DiaryController {
 
     private final DiaryService diaryService;
+
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    DiaryRepository diaryRepository;
 
     //야구 일기 저장
     @PostMapping("/diary/add")
@@ -47,6 +53,29 @@ public class DiaryController {
         }
 
     }
+
+    //userId와 날짜(gameDate)를 통해서 diaryId 조회
+    @GetMapping("/diary/getId")
+    public ResponseEntity<?> getDiaryId(@RequestParam String gameDate, HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        UserInfo userInfo = userRepository.findByUserId(userId);
+
+        System.out.println("UserInfo: " + userInfo);
+        System.out.println("GameDate: " + gameDate);
+
+        Optional<DiaryInfo> optionalDiaryInfo = diaryRepository.getDiaryInfoByUserIdAndGameDate(userInfo, gameDate);
+
+        if (optionalDiaryInfo.isPresent()) {
+            Long diaryId = optionalDiaryInfo.get().getDiaryId();
+            return ResponseEntity.ok(diaryId);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Diary not found");
+        }
+
+//        Long diaryId = diaryRepository.getDiaryInfoByUserIdAndGameDate(userInfo, gameDate).getDiaryId();
+//        return diaryId;
+    }
+
 
     //야구 일기 상세 조회
     @GetMapping("/diary/info")
