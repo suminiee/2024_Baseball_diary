@@ -1,2 +1,165 @@
 {{>layouts/loginHeader}}
+
+    <title>Diary View</title>
+    <h1>야구 일기 조회</h1>
+    <form id="diaryForm">
+        <!-- hidden input field to hold the date -->
+        <input type="hidden" id="date" value="{{date}}">
+
+        <label for="away">Away:</label>
+        <input type="text" id="away" name="away" readonly>
+
+        <label for="home">Home:</label>
+        <input type="text" id="home" name="home" readonly>
+
+        <label for="gameDate">Game Date:</label>
+        <input type="text" id="gameDate" name="gameDate" readonly>
+
+        <label for="awayScore">Away Score:</label>
+        <input type="text" id="awayScore" name="awayScore" readonly>
+
+        <label for="homeScore">Home Score:</label>
+        <input type="text" id="homeScore" name="homeScore" readonly>
+
+        <label for="mvp">MVP:</label>
+        <input type="text" id="mvp" name="mvp" readonly>
+
+        <label for="stadium">Stadium:</label>
+        <input type="text" id="stadium" name="stadium" readonly>
+
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="time" readonly>
+
+        <label for="watch">Watch:</label>
+        <input type="text" id="watch" name="watch" readonly>
+
+        <h2>Line Up Names</h2>
+        <label for="hitter1">Hitter 1:</label>
+        <input type="text" id="hitter1" name="hitter1" readonly>
+
+        <label for="hitter2">Hitter 2:</label>
+        <input type="text" id="hitter2" name="hitter2" readonly>
+
+        <label for="hitter3">Hitter 3:</label>
+        <input type="text" id="hitter3" name="hitter3" readonly>
+
+        <label for="hitter4">Hitter 4:</label>
+        <input type="text" id="hitter4" name="hitter4" readonly>
+
+        <label for="hitter5">Hitter 5:</label>
+        <input type="text" id="hitter5" name="hitter5" readonly>
+
+        <label for="hitter6">Hitter 6:</label>
+        <input type="text" id="hitter6" name="hitter6" readonly>
+
+        <label for="hitter7">Hitter 7:</label>
+        <input type="text" id="hitter7" name="hitter7" readonly>
+
+        <label for="hitter8">Hitter 8:</label>
+        <input type="text" id="hitter8" name="hitter8" readonly>
+
+        <label for="hitter9">Hitter 9:</label>
+        <input type="text" id="hitter9" name="hitter9" readonly>
+
+        <label for="pitcher">Pitcher:</label>
+        <input type="text" id="pitcher" name="pitcher" readonly>
+
+        <h2>Line Up Positions</h2>
+        <label for="position1">Position 1:</label>
+        <input type="text" id="position1" name="position1" readonly>
+
+        <label for="position2">Position 2:</label>
+        <input type="text" id="position2" name="position2" readonly>
+
+        <label for="position3">Position 3:</label>
+        <input type="text" id="position3" name="position3" readonly>
+
+        <label for="position4">Position 4:</label>
+        <input type="text" id="position4" name="position4" readonly>
+
+        <label for="position5">Position 5:</label>
+        <input type="text" id="position5" name="position5" readonly>
+
+        <label for="position6">Position 6:</label>
+        <input type="text" id="position6" name="position6" readonly>
+
+        <label for="position7">Position 7:</label>
+        <input type="text" id="position7" name="position7" readonly>
+
+        <label for="position8">Position 8:</label>
+        <input type="text" id="position8" name="position8" readonly>
+
+        <label for="position9">Position 9:</label>
+        <input type="text" id="position9" name="position9" readonly>
+
+        <button type="button" id="editButton">수정하기</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const gameDate = new URLSearchParams(window.location.search).get('gameDate');
+
+        $.ajax({
+            url: '/api/diary/getId',
+            type: 'GET',
+            data: { gameDate: gameDate },
+            success: function(diaryId) {
+                $.ajax({
+                    url: '/api/diary/info',
+                    type: 'GET',
+                    data: { diaryId: diaryId },
+                    success: function(data) {
+                        $('#away').val(data.diary.away);
+                        $('#home').val(data.diary.home);
+                        $('#gameDate').val(data.diary.gameDate);
+                        $('#awayScore').val(data.diary.awayScore);
+                        $('#homeScore').val(data.diary.homeScore);
+                        $('#mvp').val(data.diary.mvp);
+                        $('#stadium').val(data.diary.stadium);
+                        $('#time').val(data.diary.time);
+                        $('#watch').val(data.diary.watch);
+
+                        $('#hitter1').val(data.lineUpName.hitter1);
+                        $('#hitter2').val(data.lineUpName.hitter2);
+                        $('#hitter3').val(data.lineUpName.hitter3);
+                        $('#hitter4').val(data.lineUpName.hitter4);
+                        $('#hitter5').val(data.lineUpName.hitter5);
+                        $('#hitter6').val(data.lineUpName.hitter6);
+                        $('#hitter7').val(data.lineUpName.hitter7);
+                        $('#hitter8').val(data.lineUpName.hitter8);
+                        $('#hitter9').val(data.lineUpName.hitter9);
+                        $('#pitcher').val(data.lineUpName.pitcher);
+
+                        $('#position1').val(data.lineUpPosition.position1);
+                        $('#position2').val(data.lineUpPosition.position2);
+                        $('#position3').val(data.lineUpPosition.position3);
+                        $('#position4').val(data.lineUpPosition.position4);
+                        $('#position5').val(data.lineUpPosition.position5);
+                        $('#position6').val(data.lineUpPosition.position6);
+                        $('#position7').val(data.lineUpPosition.position7);
+                        $('#position8').val(data.lineUpPosition.position8);
+                        $('#position9').val(data.lineUpPosition.position9);
+                    },
+                    error: function() {
+                        alert('일기 정보를 불러오는 데 실패했습니다.');
+                    }
+                });
+            },
+            error: function(xhr) {
+                if (xhr.status === 404) {
+                    alert('다이어리를 찾을 수 없습니다.');
+                } else {
+                    alert('다이어리 ID를 불러오는 데 실패했습니다.');
+                }
+            }
+        });
+
+        $('#editButton').click(function() {
+            const diaryId = $('#diaryId').val(); // get diaryId from a hidden input or another source
+            window.location.href = '/diary/edit?diaryId=' + diaryId;
+        });
+    });
+</script>
+
 {{>layouts/loginFooter}}
