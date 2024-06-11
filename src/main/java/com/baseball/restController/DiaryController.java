@@ -33,12 +33,12 @@ public class DiaryController {
             DiarySaveRequestDto diarySaveRequestDto = mapper.treeToValue(saveObj.get("diarySaveRequestDto"), DiarySaveRequestDto.class);
             LineUpNameSaveRequestDto lineUpNameSaveRequestDto = mapper.treeToValue(saveObj.get("lineUpNameSaveRequestDto"), LineUpNameSaveRequestDto.class);
             LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto = mapper.treeToValue(saveObj.get("lineUpPositionSaveRequestDto"), LineUpPositionSaveRequestDto.class);
-            ScoreSaveRequestDto scoreSaveRequestDto = mapper.treeToValue(saveObj.get("scoreSaveRequestDto"), ScoreSaveRequestDto.class);
+//            ScoreSaveRequestDto scoreSaveRequestDto = mapper.treeToValue(saveObj.get("scoreSaveRequestDto"), ScoreSaveRequestDto.class);
 
             Long diaryId = diaryService.saveDiaryInfo(diarySaveRequestDto, userId);
             diaryService.saveLineUpNameInfo(lineUpNameSaveRequestDto, diaryId, userId);
             diaryService.saveLineUpPositionInfo(lineUpPositionSaveRequestDto, diaryId, userId);
-            diaryService.saveScoreInfo(scoreSaveRequestDto, diaryId, userId);
+//            diaryService.saveScoreInfo(scoreSaveRequestDto, diaryId, userId);
 
             return ResponseEntity.status(HttpStatus.OK).body("야구 일기 저장 성공");
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class DiaryController {
         DiaryResponseDto diaryResponseDto = diaryService.findDiaryByDiaryId(diaryId);
         LineUpNameResponseDto lineUpNameResponseDto = diaryService.findLineUpNameByDiaryId(diaryId);
         LineUpPositionResponseDto lineUpPositionResponseDto = diaryService.findLineUpPositionByDiaryId(diaryId);
-        ScoreResponseDto scoreResponseDto = diaryService.findScoreByDiaryId(diaryId);
+//        ScoreResponseDto scoreResponseDto = diaryService.findScoreByDiaryId(diaryId);
 
         Map<String, Object> responseData = new HashMap<>();
 
@@ -73,11 +73,6 @@ public class DiaryController {
         } else {
             return ResponseEntity.notFound().build();
         }
-        if (scoreResponseDto != null) {
-            responseData.put("score", scoreResponseDto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
 
 
         return new ResponseEntity<>(responseData, HttpStatus.OK);
@@ -91,12 +86,12 @@ public class DiaryController {
             DiarySaveRequestDto diarySaveRequestDto = mapper.treeToValue(saveObj.get("diarySaveRequestDto"), DiarySaveRequestDto.class);
             LineUpNameSaveRequestDto lineUpNameSaveRequestDto = mapper.treeToValue(saveObj.get("lineUpNameSaveRequestDto"), LineUpNameSaveRequestDto.class);
             LineUpPositionSaveRequestDto lineUpPositionSaveRequestDto = mapper.treeToValue(saveObj.get("lineUpPositionSaveRequestDto"), LineUpPositionSaveRequestDto.class);
-            ScoreSaveRequestDto scoreSaveRequestDto = mapper.treeToValue(saveObj.get("scoreSaveRequestDto"), ScoreSaveRequestDto.class);
+//            ScoreSaveRequestDto scoreSaveRequestDto = mapper.treeToValue(saveObj.get("scoreSaveRequestDto"), ScoreSaveRequestDto.class);
 
             diaryService.updateDiary(diarySaveRequestDto, diaryId);
             diaryService.updateLineUpName(lineUpNameSaveRequestDto, diaryId);
             diaryService.updateLineUpPosition(lineUpPositionSaveRequestDto, diaryId);
-            diaryService.updateScore(scoreSaveRequestDto, diaryId);
+//            diaryService.updateScore(scoreSaveRequestDto, diaryId);
 
             return ResponseEntity.status(HttpStatus.OK).body("야구 일기 업데이트 성공");
 
