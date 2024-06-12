@@ -1,0 +1,48 @@
+{{>layouts/loginHeader}}
+
+<div class="outfit">
+    <div class="mt-4">
+        <h3>야구장 리뷰</h3>
+    </div>
+    <div class="title-box" id="title">
+        <p>제목</p>
+    </div>
+    <div class="content-box" id="content">
+        <p>내용</p>
+    </div>
+    <div class="button-box">
+        <button class="btn btn-info mt-3 mr-3">수정하기</button>
+        <button class="btn btn-danger mt-3">삭제하기</button>
+    </div>
+</div>
+
+<style>
+    .outfit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .title-box {
+        width: 800px;
+        height: 50px;
+        border: 1px solid black;
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .content-box {
+        width: 800px;
+        height: 600px;
+        border: 1px solid black;
+        margin-top: 20px;
+        padding: 10px;
+        overflow: auto;
+    }
+
+
+</style>
+
+
+{{>layouts/loginFooter}}

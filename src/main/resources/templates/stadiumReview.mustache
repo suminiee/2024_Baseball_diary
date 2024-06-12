@@ -1,0 +1,51 @@
+{{>layouts/loginHeader}}
+
+<div style="height: 50px;" class="review-view mt-4">
+    <h3>야구장 리뷰 조회</h3>
+</div>
+<div>
+    <select class="form-select" id="stadium" name="stadium">
+<!--        <option disabled selected>야구장을 선택하세요</option>-->
+        <option selected value="대구삼성라이온즈파크">대구삼성라이온즈파크</option>
+        <option value="잠실야구장">잠실야구장</option>
+        <option value="고척스카이돔">고척스카이돔</option>
+        <option value="수원KT위즈파크">수원KT위즈파크</option>
+        <option value="인천SSG랜더스필드">인천SSG랜더스필드</option>
+        <option value="한화생명이글스파크">한화생명이글스파크</option>
+        <option value="광주기아챔피언스필드">광주기아챔피언스필드</option>
+        <option value="사직야구장">사직야구장</option>
+        <option value="창원NC파크">창원NC파크</option>
+    </select>
+</div>
+
+<div class="d-flex">
+    <div>
+        <div id="map" class="mt-3" style="width: 500px; height: 400px;"></div>
+        <div class="mt-3">대구광역시 수성구 야구전설로 1 (선택한 select값에 맞는 주소값)
+        <br> 선택한 select값에 맞는 좌표를 지도api에 넣어주기
+        </div>
+    </div>
+
+
+    <div style="width: 600px; height: 600px;" class="ml-5">
+        <h4>야구장 리뷰</h4>
+        <div>
+            여기다가 제목, 작성자 닉네임, 작성날짜 뿌려주면 됨
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=93e238c1f72e1cb20d373dd1eee477a8"></script>
+<script type="text/javascript">
+    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(35.8419, 128.6812), //지도의 중심좌표
+        level: 3
+    };
+    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+</script>
+{{>layouts/loginfooter}}

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,5 +75,29 @@ public class PageController {
         // 필요한 로직을 추가합니다.
         model.addAttribute("date", date);
         return "diaryView";
+    }
+
+    //리뷰 조회 페이지(메인)
+    @GetMapping("/stadiumReview")
+    public String viewReview() {
+        return "stadiumReview";
+    }
+
+    //리뷰 작성 페이지
+    @GetMapping("/stadiumReview/add")
+    public String addReview() {
+        return "stadiumReviewAdd";
+    }
+
+    //내가 쓴 리뷰 페이지
+    @GetMapping("/stadiumReview/myReview")
+    public String myReview() {
+        return "stadiumReviewMyReview";
+    }
+
+    @GetMapping("/stadiumReview/test")
+    public String viewReviewDetial() {
+        // 필요한 로직을 추가합니다.
+        return "stadiumReviewDetail";
     }
 }
