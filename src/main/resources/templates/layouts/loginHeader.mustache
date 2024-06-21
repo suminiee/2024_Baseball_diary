@@ -11,13 +11,18 @@
 
     <!-- 내가 만든 외부 스타일 시트 -->
     <!--    <link rel="stylesheet" type="text/css" href="header.css">-->
+    <style>
+        #mainRedirect {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <!-- HEADER -->
 <div class="container">
     <header class="d-flex align-items-center justify-content-center" style="height: 80px; margin-top: 10px;">
         <!-- 메인 메뉴바 -->
-        <div class="text-center">
+        <div class="text-center" id="mainRedirect">
             <h3>Today's</h3>
             <h3>BASEBALL</h3>
         </div>
@@ -49,4 +54,31 @@
         <li class="nav-item">
             <a class="nav-link" href="/changeMyTeam">응원팀변경</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" id="logout">로그아웃</a>
+        </li>
     </ul>
+    <script>
+        $(document).ready(function() {
+            // 메인 제목 클릭 시 메인 페이지로 이동
+            $('#mainRedirect').click(function() {
+                window.location.href = '/main';
+            });
+
+            $('#logout').click(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/logout',
+                    type: 'POST',
+                    success: function(response) {
+                        alert('로그아웃 되었습니다.');
+                        window.location.href = '/';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('로그아웃 실패:', error);
+                        alert('로그아웃 실패. 다시 시도해 주세요.');
+                    }
+                });
+            });
+        });
+    </script>

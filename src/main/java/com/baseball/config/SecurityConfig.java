@@ -30,10 +30,10 @@ public class SecurityConfig {
                 // 그 외 모든 요청 (any) 에 대해서는 인증 요구
                 .authorizeHttpRequests((authorizeRequests) ->
                                 authorizeRequests
-                                .requestMatchers("/**").permitAll()
-//                                        .requestMatchers("/api/login").permitAll()
-//                                        .anyRequest().permitAll()
-//                                        .anyRequest().authenticated()
+                                        .requestMatchers("/login", "/", "/signUp").permitAll()
+                                        .requestMatchers("/api/login", "/api/signUp", "/api/signUp/isDuplicatedId",
+                                                "/api/signUp/isDuplicatedNickname").permitAll()
+                                        .anyRequest().authenticated()
                 )
 
                 // Rest 방식으로 로그인을 할 것이므로 form 로그인 사용 안함
@@ -44,7 +44,7 @@ public class SecurityConfig {
                         configurer
                                 .logoutUrl("/api/logout")
                                 .deleteCookies("JSESSIONID")
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout", "POST"))
                 )
 
                 //인증되지 않은 자원에 접근했을 때
