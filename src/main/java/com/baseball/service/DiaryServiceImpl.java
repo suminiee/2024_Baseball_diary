@@ -26,8 +26,6 @@ public class DiaryServiceImpl implements DiaryService{
     LineUpNameRepository lineUpNameRepository;
     @Autowired
     LineUpPositionRepository lineUpPositionRepository;
-    @Autowired
-    ScoreRepository scoreRepository;
 
     @Override
     public Long saveDiaryInfo(DiarySaveRequestDto diarySaveRequestDto, Long userId) {

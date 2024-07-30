@@ -50,9 +50,6 @@
             <h3>Today's</h3>
             <h3>BASEBALL</h3>
         </div>
-        <div class="date">
-            DATE: {{date}}
-        </div>
     </div>
 
     <div class="content">
@@ -119,7 +116,6 @@
         </div>
 
         <div class="game mt-3 ml-3">
-
             <div class="mt-5 mb-4">
                 <h4>Baseball Stadium</h4>
                 <select class="form-control" id="stadium" name="stadium" style="width: 200px;">
@@ -161,8 +157,6 @@
                     <option value="우천취소">우천취소</option>
                 </select>
             </div>
-
-
             <h4>GAME</h4>
             <table>
                 <tr>
@@ -222,78 +216,68 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const stadiumSelect = document.getElementById("stadium");
-        const homeTeamSelect = document.getElementById("homeTeam");
-        const awayTeamSelect = document.getElementById("awayTeam");
+    document.getElementById('saveDiaryButton').addEventListener('click', async function() {
+        const gameDate = document.getElementById('gameDate').value;
+        const stadium = document.getElementById('stadium').value;
+        const time = document.getElementById('time').value;
+        const watch = document.getElementById('watch').value;
+        const homeTeam = document.getElementById('homeTeam').value;
+        const homeScore = document.getElementById('homeScore').value;
+        const awayTeam = document.getElementById('awayTeam').value;
+        const awayScore = document.getElementById('awayScore').value;
+        const mvp = document.getElementById('mvp').value;
 
-        stadiumSelect.value = "";
-        homeTeamSelect.value = "";
-        awayTeamSelect.value = "";
-    });
+        const lineUpPositions = [];
+        const lineUpNames = [];
+        for (let i = 0; i < 9; i++) {
+            lineUpPositions.push({
+                position: document.getElementById(`lineUpPosition${i + 1}`).value,
+            });
+            lineUpNames.push({
+                name: document.getElementById(`lineUpName${i + 1}`).value,
+            });
+        }
 
-    $(document).ready(function() {
-        $("#saveDiaryButton").click(function(event) {
-            event.preventDefault(); // 기본 폼 제출 동작을 막음
+        const diarySaveRequestDto = {
+            gameDate,
+            stadium,
+            time,
+            watch,
+            homeTeam,
+            homeScore,
+            awayTeam,
+            awayScore,
+            mvp,
+        };
 
-            var diarySaveRequestDto = {
-                away: $("#awayTeam").val(),
-                home: $("#homeTeam").val(),
-                gameDate: $("#gameDate").val(),
-                awayScore: $("#awayScore").val(),
-                homeScore: $("#homeScore").val(),
-                mvp: $("#mvp").val(),
-                stadium: $("#stadium").val(),
-                time: $("#time").val(),
-                watch: $("#watch").val()
-            };
+        const saveObj = {
+            diarySaveRequestDto,
+            lineUpNameSaveRequestDto: { lineUpNames },
+            lineUpPositionSaveRequestDto: { lineUpPositions },
+        };
 
-            var lineUpNameSaveRequestDto = {
-                hitter1: $("#lineUpName1").val(),
-                hitter2: $("#lineUpName2").val(),
-                hitter3: $("#lineUpName3").val(),
-                hitter4: $("#lineUpName4").val(),
-                hitter5: $("#lineUpName5").val(),
-                hitter6: $("#lineUpName6").val(),
-                hitter7: $("#lineUpName7").val(),
-                hitter8: $("#lineUpName8").val(),
-                hitter9: $("#lineUpName9").val(),
-                pitcher: $("#lineUpNamePitcher").val()
-            };
-
-            var lineUpPositionSaveRequestDto = {
-                position1: $("#lineUpPosition1").val(),
-                position2: $("#lineUpPosition2").val(),
-                position3: $("#lineUpPosition3").val(),
-                position4: $("#lineUpPosition4").val(),
-                position5: $("#lineUpPosition5").val(),
-                position6: $("#lineUpPosition6").val(),
-                position7: $("#lineUpPosition7").val(),
-                position8: $("#lineUpPosition8").val(),
-                position9: $("#lineUpPosition9").val()
-            };
-
-            // AJAX 요청 전송
-            $.ajax({
-                url: "/api/diary/add",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    diarySaveRequestDto: diarySaveRequestDto,
-                    lineUpNameSaveRequestDto: lineUpNameSaveRequestDto,
-                    lineUpPositionSaveRequestDto: lineUpPositionSaveRequestDto
-                }),
-                success: function(response) {
-                    alert("야구 일기 저장 성공");
-                    window.location.href = "/diary";  // 저장에 성공하면 /diary로 이동
+        try {
+            const response = await fetch('/api/diary/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                error: function(error) {
-                    alert("야구 일기 저장 중 오류 발생: " + error.responseText);
-                }
+                body: JSON.stringify(saveObj),
             });
 
-        });
+            if (response.ok) {
+                alert("Diary saved successfully");
+                window.location.href = `/diary/view/${gameDate}`;
+            } else {
+                alert("Failed to save diary");
+            }
+        } catch (error) {
+            console.error("Error saving diary:", error);
+            alert("An error occurred while saving the diary");
+        }
     });
+
+
 </script>
 
 {{>layouts/loginFooter}}

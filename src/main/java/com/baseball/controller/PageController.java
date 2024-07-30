@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class PageController {
@@ -59,21 +61,18 @@ public class PageController {
 
     @GetMapping("/diary/write/{date}")
     public String writeDiary(@PathVariable String date, Model model) {
-        // 필요한 로직을 추가합니다.
-        model.addAttribute("date", new SimpleDateFormat("yyyy.MM.dd").format(new Date()));
+        // 모델에 기본 속성 추가
+        model.addAttribute("date", date);
         model.addAttribute("lineUp", new ArrayList<>()); // 빈 배열로 초기화
-        model.addAttribute("homeScores", new ArrayList<>()); // 빈 배열로 초기화
-        model.addAttribute("awayScores", new ArrayList<>()); // 빈 배열로 초기화
-        model.addAttribute("homeTeam", ""); // 빈 문자열로 초기화
-        model.addAttribute("awayTeam", ""); // 빈 문자열로 초기화
+        model.addAttribute("game", new HashMap<>()); // 빈 맵으로 초기화
+        model.addAttribute("mvp", ""); // 빈 문자열로 초기화
         return "diaryWrite";
     }
 
     // 일기 조회 페이지로 이동
     @GetMapping("/diary/view/{date}")
-    public String viewDiary(@PathVariable String date, Model model) {
-        // 필요한 로직을 추가합니다.
-        model.addAttribute("date", date);
+    public String viewDiary() {
+
         return "diaryView";
     }
 
