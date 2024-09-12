@@ -58,13 +58,13 @@
     <table>
         <thead>
         <tr>
+            <th>SUN</th>
             <th>MON</th>
             <th>TUE</th>
             <th>WED</th>
             <th>THU</th>
             <th>FRI</th>
             <th>SAT</th>
-            <th>SUN</th>
         </tr>
         </thead>
         <tbody id="calendarBody">
@@ -72,7 +72,6 @@
         </tbody>
     </table>
 </div>
-
 
 <script>
     const today = new Date();
@@ -82,7 +81,7 @@
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     function formatDate(year, month, day) {
-        return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     }
 
     async function loadCalendar(month, year) {
@@ -119,7 +118,8 @@
                     }
 
                     if (new Date(year, month, date) <= today) {
-                        let response = await fetch(`/api/diary/check?date=${formatDate(year, month + 1, date)}`);
+                        let formattedDate = formatDate(year, month, date);
+                        let response = await fetch(`/api/diary/check?date=${formattedDate}`);
                         let diaryExists = await response.json();
 
                         let button = document.createElement('button');
@@ -127,8 +127,8 @@
                         button.innerText = diaryExists.exists ? '일기 확인' : '일기 쓰기';
                         button.onclick = () => {
                             window.location.href = diaryExists.exists
-                                    ? `/diary/view/${formatDate(year, month + 1, date)}`
-                                    : `/diary/write/${formatDate(year, month + 1, date)}`;
+                                    ? `/diary/view/${formattedDate}`
+                                    : `/diary/write/${formattedDate}`;
                         };
                         cell.appendChild(document.createElement('br'));
                         cell.appendChild(button);
